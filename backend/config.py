@@ -22,7 +22,7 @@ class BaseConfig:
     ALLOWED_EXTENSIONS: Set[str] = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
     
     # Model and inference parameters
-    DEFAULT_CONFIDENCE_THRESHOLD: float = float(os.environ.get("CONFIDENCE_THRESHOLD", 0.40))
+    DEFAULT_CONFIDENCE_THRESHOLD: float = float(os.environ.get("CONFIDENCE_THRESHOLD", 0.50))
     DEFAULT_BLUR_THRESHOLD: float = float(os.environ.get("BLUR_THRESHOLD", 50.0))
     
     # Paths to model assets

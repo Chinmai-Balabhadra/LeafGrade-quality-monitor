@@ -105,27 +105,23 @@ def resize_image(
     interpolation: Optional[int] = None
 ) -> np.ndarray:
     """
-    Resizes an image to the target dimensions (width, height) using optimal interpolation.
+    Resizes an image to the target dimensions (width, height) using bilinear interpolation.
     
-    Uses cv2.INTER_AREA for downscaling (preserves edges and avoids moiré artifacts)
-    and cv2.INTER_LINEAR or cv2.INTER_CUBIC for upscaling.
+    Defaults to cv2.INTER_LINEAR (bilinear interpolation) to maintain bit-for-bit
+    consistency with Keras image_dataset_from_directory training pipeline.
     
     Args:
         image: Input image array.
         target_size: Target (width, height) tuple. Default: (224, 224).
-        interpolation: Optional explicit cv2 interpolation flag.
+        interpolation: Optional explicit cv2 interpolation flag (defaults to cv2.INTER_LINEAR).
         
     Returns:
         Resized image array with shape (height, width, channels).
     """
-    h, w = image.shape[:2]
     target_w, target_h = target_size
 
     if interpolation is None:
-        if w > target_w or h > target_h:
-            interpolation = cv2.INTER_AREA
-        else:
-            interpolation = cv2.INTER_LINEAR
+        interpolation = cv2.INTER_LINEAR
 
     return cv2.resize(image, (target_w, target_h), interpolation=interpolation)
 

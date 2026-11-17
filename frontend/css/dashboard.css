@@ -172,8 +172,9 @@
 
 .camera-preview-wrapper {
     width: 100%;
+    min-height: 280px;
     max-height: 380px;
-    background: #000000;
+    background: #0f172a;
     border-radius: var(--radius-md);
     overflow: hidden;
     position: relative;
@@ -643,37 +644,38 @@
     background: #ffffff;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1.25rem 1.5rem;
+    padding: 1.15rem 1.35rem;
     display: flex;
     align-items: center;
-    gap: 1.15rem;
-    box-shadow: var(--shadow-sm);
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     transition: var(--transition);
 }
 
 .stat-card:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
 }
 
 .stat-icon-wrap {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     flex-shrink: 0;
 }
 
 .stat-content {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .stat-label {
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--text-muted);
@@ -681,11 +683,90 @@
 }
 
 .stat-value {
-    font-size: 1.75rem;
-    font-weight: 800;
+    font-size: 1.45rem;
+    font-weight: 600;
     color: var(--text-primary);
-    margin: 0.2rem 0 0;
+    margin: 0.15rem 0 0;
     line-height: 1.2;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Model Performance 6-Card Equal Height KPI Grid */
+.model-perf-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.model-perf-kpi-grid .stat-card {
+    padding: 1rem 1.15rem;
+    min-height: 84px;
+    height: 100%;
+}
+
+.model-perf-kpi-grid .stat-value {
+    font-size: 1.42rem;
+    font-weight: 600;
+}
+
+/* Model Info & Dataset Breakdown Panel */
+.model-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.25rem;
+}
+
+.model-info-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.model-info-card h4 {
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f0ede6;
+    font-family: 'Outfit', sans-serif;
+}
+
+.model-info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.model-info-card ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.42rem 0;
+    border-bottom: 1px dashed #f5f2eb;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.model-info-card ul li:last-child {
+    border-bottom: none;
+}
+
+.model-info-card .info-label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.model-info-card .info-value {
+    color: #4b5563;
+    font-weight: 500;
 }
 
 .history-card {
@@ -1318,3 +1399,127 @@
     border: 1px solid rgba(234, 179, 8, 0.3);
     color: #854d0e;
 }
+
+/* ==========================================================================
+   AI Model Evaluation Per-Class Table & Matrix Layout Enhancements
+   ========================================================================== */
+.eval-card-full {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    margin-bottom: 2.25rem;
+    width: 100%;
+}
+
+.eval-table-container {
+    max-height: 540px;
+    overflow-y: auto;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.eval-table {
+    width: 100%;
+    min-width: 840px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.eval-table th {
+    padding: 0.7rem 1rem;
+    background: #f8fafc;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.eval-table td {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    font-size: 0.86rem;
+}
+
+.eval-table tbody tr:hover {
+    background: rgba(241, 245, 249, 0.75);
+}
+
+.eval-col-name {
+    min-width: 290px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.eval-col-health {
+    width: 120px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.eval-col-stat {
+    width: 95px;
+    text-align: center;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.eval-col-f1 {
+    min-width: 160px;
+    width: 180px;
+}
+
+.eval-col-support,
+.eval-table th:nth-child(6),
+.eval-table td:nth-child(6) {
+    width: 85px;
+    text-align: center;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Confusion Matrix Large Preview Card */
+.matrix-preview-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+    width: 100%;
+}
+
+.matrix-canvas-wrapper {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    background: #faf8f5;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+    cursor: zoom-in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.matrix-canvas-wrapper img {
+    width: 100%;
+    height: auto;
+    max-height: 640px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.25s ease;
+}
+
+.matrix-canvas-wrapper:hover img {
+    transform: scale(1.015);
+}
+

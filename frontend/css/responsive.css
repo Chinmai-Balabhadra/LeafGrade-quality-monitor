@@ -1,17 +1,54 @@
 /* ==============================================================================
-   Leaf Quality Classification & Plucking Standard Monitoring System
-   Module 7: Responsive Media Queries
+   Leafora – Responsive Media Queries
    File: frontend/css/responsive.css
    ============================================================================== */
 
-/* Tablet & Smaller Laptops (max-width: 992px) */
-@media (max-width: 992px) {
-    .hero-title {
-        font-size: 2.3rem;
+/* Desktop & Laptop Breakpoint (max-width: 1200px) */
+@media (max-width: 1200px) {
+    .summary-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
 
-    .hero-description {
-        font-size: 1.05rem;
+    .model-perf-kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .home-secondary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablet & Smaller Laptops (max-width: 992px) */
+@media (max-width: 992px) {
+    .model-info-grid {
+        grid-template-columns: 1fr;
+    }
+    .leafora-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        z-index: 1100;
+        background: #ffffff;
+    }
+
+    .leafora-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .mobile-topbar {
+        display: flex;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 5rem 1.25rem 3rem;
     }
 
     .analysis-dashboard {
@@ -21,88 +58,82 @@
 
     .footer-content {
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: 2.25rem;
+        padding: 0 2rem;
     }
 
     .footer-brand {
         grid-column: span 2;
     }
+
+    .footer-bottom {
+        margin: 0 2rem;
+    }
+
+    .eval-table th,
+    .eval-table td {
+        padding: 0.5rem 0.85rem;
+    }
+
+    .eval-col-name {
+        min-width: 220px;
+    }
+
+    .matrix-canvas-wrapper {
+        min-height: 340px;
+    }
 }
 
 /* Mobile Devices & Small Tablets (max-width: 768px) */
 @media (max-width: 768px) {
-    .navbar {
-        padding: 0.65rem 0;
+    .section-title {
+        font-size: 1.65rem;
     }
 
-    .nav-toggle {
-        display: block;
+    .welcome-banner-card {
+        padding: 1.75rem 1.5rem;
+        background-position: right center;
+        background-image: linear-gradient(90deg, rgba(247, 239, 230, 0.95) 0%, rgba(247, 239, 230, 0.82) 55%, rgba(247, 239, 230, 0.15) 100%), url('../assets/welcome_banner_clean.jpg');
     }
 
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1.5rem;
-        border-bottom: 1px solid var(--border-color);
-        box-shadow: var(--shadow-lg);
+    .welcome-text-content {
+        max-width: 100%;
+        position: relative;
+        z-index: 2;
+    }
+
+    .welcome-title {
+        font-size: 2rem;
+    }
+
+    .summary-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+    }
+
+    .model-perf-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    .nav-links.show {
-        display: flex;
+    .summary-kpi-card {
+        padding: 1rem;
+        gap: 0.85rem;
     }
 
-    .nav-link {
-        width: 100%;
-        padding: 0.6rem 0;
-        font-size: 1.05rem;
+    .summary-icon-pill {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
     }
 
-    .nav-status {
-        margin-top: 0.5rem;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .hero-section {
-        padding: 3rem 0 2.5rem;
-    }
-
-    .hero-title {
-        font-size: 1.95rem;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .hero-actions .btn {
-        width: 100%;
-    }
-
-    .hero-badges {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .info-pill {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .section {
-        padding: 3.5rem 0;
-    }
-
-    .section-title {
-        font-size: 1.75rem;
+    .summary-number {
+        font-size: 1.5rem;
     }
 
     .panel-body {
@@ -127,24 +158,128 @@
         flex-direction: column;
     }
 
+    .history-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.85rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    .history-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .toolbar-left {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box-wrap {
+        min-width: 100%;
+    }
+
+    .filter-dropdown-wrap {
+        width: 100%;
+    }
+
+    .filter-dropdown-wrap .form-select {
+        width: 100%;
+    }
+
+    .record-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .eval-card-full .history-toolbar,
+    .matrix-preview-card .history-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .eval-card-full .search-box-wrap {
+        width: 100% !important;
+    }
+
+    .matrix-preview-card .history-toolbar > div:last-child {
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    .matrix-canvas-wrapper {
+        min-height: 280px;
+    }
+
+    .footer {
+        padding: 2.5rem 0 1.75rem;
+        margin-top: 2.75rem;
+    }
+
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 1.75rem;
+        gap: 2rem;
+        padding: 0 1.75rem;
     }
 
     .footer-brand {
         grid-column: span 1;
+    }
+
+    .footer-bottom {
+        margin: 0 1.75rem;
+        padding-top: 1.25rem;
     }
 }
 
 /* Small Smartphone Viewports (max-width: 480px) */
 @media (max-width: 480px) {
     .container {
-        padding: 0 1rem;
+        padding: 0 0.5rem;
     }
 
-    .hero-title {
+    .welcome-banner-card {
+        padding: 1.5rem 1.15rem;
+        min-height: auto;
+    }
+
+    .welcome-title {
         font-size: 1.65rem;
+    }
+
+    .welcome-greeting {
+        font-size: 1.15rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 0.88rem;
+    }
+
+    .welcome-topbar {
+        justify-content: space-between;
+    }
+
+    .welcome-cta-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .welcome-cta-row .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .summary-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .model-perf-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
 
     .dropzone {
@@ -177,68 +312,7 @@
     .toast {
         width: 100%;
     }
-}
 
-
-/* Module 8: Responsive History & Analytics Adjustments */
-@media (max-width: 768px) {
-    .history-stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.85rem;
-    }
-
-    .stat-card {
-        padding: 1rem;
-        gap: 0.75rem;
-    }
-
-    .stat-icon-wrap {
-        width: 42px;
-        height: 42px;
-        font-size: 1.15rem;
-    }
-
-    .stat-value {
-        font-size: 1.4rem;
-    }
-
-    .history-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .toolbar-left {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .search-box-wrap {
-        min-width: 100%;
-    }
-
-    .filter-dropdown-wrap {
-        width: 100%;
-    }
-
-    .filter-dropdown-wrap .form-select {
-        width: 100%;
-    }
-
-    .toolbar-right {
-        justify-content: flex-end;
-    }
-
-    .record-detail-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .quality-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
     .history-stats-grid {
         grid-template-columns: 1fr;
     }
@@ -252,5 +326,32 @@
     .history-pagination .btn-page {
         width: 100%;
         justify-content: center;
+    }
+
+    .matrix-preview-card .history-toolbar > div:last-child {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .matrix-preview-card .history-toolbar .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .footer {
+        padding: 2rem 0 1.25rem;
+        margin-top: 2rem;
+        border-radius: 16px;
+    }
+
+    .footer-content {
+        padding: 0 1.25rem;
+        gap: 1.5rem;
+    }
+
+    .footer-bottom {
+        margin: 0 1.25rem;
+        font-size: 0.76rem;
     }
 }

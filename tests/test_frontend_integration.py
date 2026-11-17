@@ -65,6 +65,7 @@ class TestFrontendIntegration(unittest.TestCase):
             "/js/upload.js",
             "/js/prediction.js",
             "/js/history.js",
+            "/js/model_evaluation.js",
             "/js/main.js"
         ]
         for route in routes:
@@ -166,7 +167,14 @@ class TestFrontendIntegration(unittest.TestCase):
             "btnClearAllHistory", "historyLoadingOverlay", "historyEmptyState",
             "historyTableContainer", "historyTableBody", "historyPagination",
             "btnPrevPage", "btnNextPage", "historyPageIndicator",
-            "historyDetailModal", "btnCloseModal", "modalRecordDetails"
+            "historyDetailModal", "btnCloseModal", "modalRecordDetails",
+            # AI Model Evaluation Elements
+            "model-performance", "evalAccuracy", "evalLoss", "evalMacroF1",
+            "evalWeightedF1", "evalTestSamples", "evalClasses",
+            "evalClassSearchInput", "evalClassTable", "evalClassTableBody",
+            "evalConfusionMatrixImg", "btnConfusionMatrixFull", "btnZoomMatrixModal",
+            "matrixLoadingSpinner", "matrixErrorContainer", "matrixImageWrapper",
+            "confusionMatrixModal", "modalConfusionMatrixImg"
         ]
 
         for elem_id in required_element_ids:
@@ -220,6 +228,78 @@ class TestFrontendIntegration(unittest.TestCase):
         self.assertIn("diseased_count", stats)
         self.assertIn("average_confidence_percent", stats)
         self.assertIn("by_species", stats)
+
+    def test_09_single_history_section_and_zero_duplicate_ids(self):
+        """Verify index.html contains exactly ONE history section and ZERO duplicate element IDs."""
+        html_file = FRONTEND_DIR / "index.html"
+        html_content = html_file.read_text(encoding="utf-8")
+
+        # 1. Verify exactly one section with id="history"
+        history_sections = re.findall(r'<section[^>]*id=["\']history["\']', html_content)
+        self.assertEqual(
+            len(history_sections), 1,
+            f"Expected exactly 1 history section, found {len(history_sections)}"
+        )
+
+        # 2. Verify no leftover raw debugging text
+        self.assertNotIn("=====>", html_content)
+
+        # 3. Verify all HTML IDs are unique
+        from collections import Counter
+        all_ids = re.findall(r'id=["\']([^"\']+)["\']', html_content)
+        counts = Counter(all_ids)
+        duplicates = {elem_id: cnt for elem_id, cnt in counts.items() if cnt > 1}
+        self.assertEqual(
+            duplicates, {},
+            f"Found duplicate DOM element IDs in index.html: {duplicates}"
+        )
+
+        # 4. Verify ordered sections sequence
+        sections = re.findall(r'<section[^>]*id=["\']([^"\']+)["\']', html_content)
+        expected_sections = [
+            "home", "analysis", "history", "model-performance", "features", "how-it-works", "about"
+        ]
+        self.assertEqual(sections, expected_sections)
+
+    def test_10_model_evaluation_integration(self):
+        """Verify model evaluation API endpoints return empirical metrics for frontend rendering."""
+        eval_resp = self.client.get("/api/model/evaluation")
+        self.assertEqual(eval_resp.status_code, 200)
+        data = eval_resp.get_json()
+
+        self.assertEqual(data["status"], "SUCCESS")
+        self.assertEqual(data["dataset_info"]["name"], "PlantDoc (Cleaned & Stratified)")
+        self.assertEqual(data["dataset_info"]["test_images"], 465)
+        self.assertEqual(data["overall_metrics"]["total_test_samples"], 465)
+        self.assertAlmostEqual(data["overall_metrics"]["accuracy_percent"], 56.56, places=1)
+
+        cm_resp = self.client.get("/api/model/confusion-matrix")
+        self.assertEqual(cm_resp.status_code, 200)
+        self.assertEqual(cm_resp.content_type, "image/png")
+
+    def test_11_per_class_table_rendering_and_support_sum(self):
+        """Verify frontend renders all 28 class rows with support sum totaling 465."""
+        html_file = FRONTEND_DIR / "index.html"
+        html_content = html_file.read_text(encoding="utf-8")
+
+        # Extract tbody contents
+        m = re.search(r'<tbody id=["\']evalClassTableBody["\']>(.*?)</tbody>', html_content, re.DOTALL)
+        self.assertIsNotNone(m, "evalClassTableBody tbody not found in index.html")
+        tbody_html = m.group(1)
+
+        # Count <tr> rows
+        rows = re.findall(r'<tr[^>]*>', tbody_html)
+        self.assertEqual(len(rows), 28, f"Expected 28 class table rows, found {len(rows)}")
+
+        # Check support values sum to 465
+        support_matches = re.findall(r'<td style="[^"]*text-align:center;[^"]*">(\d+)</td>', tbody_html)
+        self.assertEqual(len(support_matches), 28)
+        total_support = sum(int(s) for s in support_matches)
+        self.assertEqual(total_support, 465, f"Expected total support 465, got {total_support}")
+
+        # Check Apple Scab Leaf row presence
+        self.assertIn("Apple Scab Leaf", tbody_html)
+        self.assertIn("37.2%", tbody_html)
 
 
 if __name__ == "__main__":

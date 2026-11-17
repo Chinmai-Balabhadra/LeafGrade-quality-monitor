@@ -6,7 +6,9 @@ File: tests/test_api.py
 import io
 import json
 import os
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 import unittest
 
@@ -20,6 +22,7 @@ os.environ.setdefault("KERAS_HOME", str(PROJECT_ROOT / ".keras"))
 
 from backend.app import create_app
 from backend.config import TestingConfig
+from database.db import init_db
 
 TEST_DIR = PROJECT_ROOT / "datasets" / "processed" / "plantdoc" / "test"
 
@@ -29,12 +32,25 @@ class TestFlaskBackendAPI(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Initializes Flask test client and locates sample test images."""
+        """Initializes Flask test client, isolated test database, and locates sample test images."""
+        cls._temp_db_dir = tempfile.mkdtemp(prefix="test_api_db_")
+        cls._temp_db_path = Path(cls._temp_db_dir) / "test_api_leaf.db"
+        os.environ["DATABASE_PATH"] = str(cls._temp_db_path)
+        init_db(cls._temp_db_path)
+
         cls.app = create_app(TestingConfig)
         cls.client = cls.app.test_client()
 
         sample_imgs = list((TEST_DIR / "Apple_leaf").glob("*.jpg"))
         cls.sample_image_path = sample_imgs[0] if sample_imgs else None
+
+    @classmethod
+    def tearDownClass(cls):
+        """Cleans up isolated test database environment."""
+        if "DATABASE_PATH" in os.environ:
+            del os.environ["DATABASE_PATH"]
+        if Path(cls._temp_db_dir).exists():
+            shutil.rmtree(cls._temp_db_dir, ignore_errors=True)
 
     def test_01_root_endpoint(self):
         """Verify GET / returns 200 OK with service description and route index."""
@@ -365,6 +381,50 @@ class TestFlaskBackendAPI(unittest.TestCase):
         self.assertEqual(data["status"], "SUCCESS")
         self.assertIn("deleted_count", data)
         self.assertGreaterEqual(data["deleted_count"], 1)
+
+    def test_24_model_evaluation_endpoint(self):
+        """Verify GET /api/model/evaluation returns 200 OK with valid empirical metrics schema."""
+        response = self.client.get("/api/model/evaluation")
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertEqual(data["status"], "SUCCESS")
+        self.assertIn("overall_metrics", data)
+        self.assertIn("dataset_info", data)
+        self.assertIn("per_class_metrics", data)
+        self.assertEqual(len(data["per_class_metrics"]), 28)
+        self.assertAlmostEqual(data["overall_metrics"]["accuracy_percent"], 56.56, places=1)
+        self.assertAlmostEqual(data["overall_metrics"]["loss"], 1.5560, places=2)
+
+    def test_25_confusion_matrix_endpoint(self):
+        """Verify GET /api/model/confusion-matrix returns 200 OK with PNG image."""
+        response = self.client.get("/api/model/confusion-matrix")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, "image/png")
+        self.assertGreater(len(response.data), 1000)
+
+    def test_26_confusion_matrix_aliases_and_formats(self):
+        """Verify all confusion matrix URL aliases and JSON descriptor formats return 200."""
+        aliases = [
+            "/api/model/confusion-matrix/",
+            "/api/model/confusion_matrix",
+            "/api/model/confusion_matrix/",
+            "/api/model/confusion-matrix.png",
+            "/api/model/confusion_matrix.png",
+            "/reports/confusion_matrix.png",
+            "/assets/confusion_matrix.png"
+        ]
+        for url in aliases:
+            resp = self.client.get(url)
+            self.assertEqual(resp.status_code, 200, f"Failed for alias: {url}")
+            self.assertEqual(resp.content_type, "image/png")
+            self.assertGreater(len(resp.data), 1000)
+
+        # JSON format query
+        json_resp = self.client.get("/api/model/confusion-matrix?format=json")
+        self.assertEqual(json_resp.status_code, 200)
+        jdata = json_resp.get_json()
+        self.assertEqual(jdata["status"], "SUCCESS")
+        self.assertEqual(jdata["dimensions"], "28x28")
 
 
 if __name__ == "__main__":

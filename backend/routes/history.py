@@ -71,6 +71,7 @@ def list_history() -> Response:
 
 
 @history_bp.route("/history/stats", methods=["GET"])
+@history_bp.route("/history/statistics", methods=["GET"])
 def history_statistics() -> Response:
     """Returns aggregate summary analytics over all past leaf analyses."""
     stats = get_statistics()

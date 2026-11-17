@@ -572,3 +572,6 @@ const HistoryController = (function() {
         refresh
     };
 })();
+
+// Explicitly attach to window for cross-module controller coordination
+window.HistoryController = HistoryController;

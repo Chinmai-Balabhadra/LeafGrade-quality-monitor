@@ -203,6 +203,36 @@ const ApiService = (function() {
         }
     }
 
+    /**
+     * Retrieves empirical model evaluation metrics on held-out test data.
+     * @returns {Promise<Object>} Evaluation metrics and per-class reports.
+     */
+    async function getModelEvaluation() {
+        const url = `${BASE_URL}/api/model/evaluation`;
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || `HTTP ${response.status}`);
+            }
+            return data;
+        } catch (error) {
+            console.error('[ApiService] getModelEvaluation failed:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Returns the appropriate URL for the high-resolution confusion matrix image.
+     * @returns {string} URL to the confusion matrix endpoint.
+     */
+    function getConfusionMatrixUrl() {
+        return `${BASE_URL}/api/model/confusion-matrix`;
+    }
+
     return {
         checkHealth,
         predictLeaf,
@@ -211,6 +241,11 @@ const ApiService = (function() {
         getHistoryRecord,
         deleteHistoryRecord,
         clearAllHistory,
+        getModelEvaluation,
+        getConfusionMatrixUrl,
         BASE_URL
     };
 })();
+
+// Explicitly register on global window object for resilient cross-script lifecycle
+window.ApiService = ApiService;

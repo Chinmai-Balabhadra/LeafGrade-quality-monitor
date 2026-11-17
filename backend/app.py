@@ -26,6 +26,7 @@ from backend.errors import register_error_handlers
 from backend.routes.health import health_bp
 from backend.routes.prediction import prediction_bp
 from backend.routes.history import history_bp
+from backend.routes.model_evaluation import model_bp
 
 logging.basicConfig(
     level=logging.INFO,
@@ -51,13 +52,14 @@ def create_app(config_class: Optional[BaseConfig] = None) -> Flask:
         app,
         resources={r"/api/*": {"origins": app.config.get("CORS_ORIGINS", "*")}},
         methods=["GET", "POST", "DELETE", "OPTIONS"],
-        allow_headers=["Content-Type", "Authorization", "X-Requested-With"]
+        allow_headers=["*"]
     )
 
     # Register blueprints
     app.register_blueprint(health_bp)
     app.register_blueprint(prediction_bp)
     app.register_blueprint(history_bp)
+    app.register_blueprint(model_bp)
 
     # Register standardized error handlers
     register_error_handlers(app)
@@ -77,10 +79,28 @@ def create_app(config_class: Optional[BaseConfig] = None) -> Flask:
     def serve_assets(filename):
         return send_from_directory(str(frontend_dir / "assets"), filename)
 
+    @app.route("/reports/<path:filename>", methods=["GET"])
+    def serve_reports(filename):
+        reports_dir = PROJECT_ROOT / "reports"
+        return send_from_directory(str(reports_dir), filename)
+
     @app.route("/app", methods=["GET"])
     @app.route("/index.html", methods=["GET"])
     def serve_frontend_ui():
         return send_from_directory(str(frontend_dir), "index.html")
+
+    # Evaluation route aliases ensuring 404 immunity
+    @app.route("/api/model_evaluation", methods=["GET"])
+    @app.route("/api/evaluation", methods=["GET"])
+    def route_evaluation_alias():
+        from backend.routes.model_evaluation import get_model_evaluation
+        return get_model_evaluation()
+
+    @app.route("/api/confusion-matrix", methods=["GET"])
+    @app.route("/api/confusion_matrix", methods=["GET"])
+    def route_confusion_matrix_alias():
+        from backend.routes.model_evaluation import get_confusion_matrix_image
+        return get_confusion_matrix_image()
 
     # Root welcome route (serves frontend HTML to web browsers, JSON to API clients)
     @app.route("/", methods=["GET"])
@@ -99,6 +119,8 @@ def create_app(config_class: Optional[BaseConfig] = None) -> Flask:
                 "predict": "/api/predict",
                 "history": "/api/history",
                 "history_stats": "/api/history/stats",
+                "model_evaluation": "/api/model/evaluation",
+                "confusion_matrix": "/api/model/confusion-matrix",
                 "web_app": "/index.html"
             }
         }), 200

@@ -58,7 +58,14 @@ def predict_endpoint() -> Response:
     service = get_prediction_service()
     result = service.predict_image(file_obj, confidence_threshold=confidence_threshold)
 
-    # 4. Persist analysis record to SQLite database
+    # 4. Handle Rejected Non-Leaf Images (OOD Guardrail - do not save to SQLite)
+    if result.get("status") == "REJECTED_NOT_LEAF" or result.get("is_leaf") is False:
+        logger.info(f"OOD validation rejected upload '{result.get('source')}': {result.get('message')}")
+        result["analysis_id"] = None
+        result["history_saved"] = False
+        return jsonify(result), 422
+
+    # 5. Persist valid leaf analysis record to SQLite database
     try:
         analysis_id = insert_analysis(result)
         result["analysis_id"] = analysis_id

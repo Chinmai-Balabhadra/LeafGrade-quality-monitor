@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaf Quality Classification & Plucking Standard Monitoring System</title>
+    <title>Leafora – Plant Leaf Analysis & Quality Monitoring</title>
     
     <!-- Meta tags for agricultural AI tech -->
-    <meta name="description" content="AI-powered leaf quality classification and plucking standard monitoring system using handheld camera imagery and MobileNetV2 deep learning.">
+    <meta name="description" content="Leafora: AI-powered leaf quality classification and plucking standard monitoring system using handheld camera imagery and MobileNetV2 deep learning.">
     <meta name="author" content="CSE471 Academic Project Team">
 
-    <!-- Google Fonts: Inter & Outfit -->
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -24,233 +24,250 @@
 </head>
 <body>
 
-    <!-- ====================================================================
-         Navigation Bar
-         ==================================================================== -->
-    <header class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="nav-brand">
-                <span class="brand-icon"><i class="fas fa-leaf"></i></span>
-                <span>AgriLeaf <span style="color:var(--primary);font-weight:600;">AI</span></span>
+    <div class="app-layout">
+        <!-- ====================================================================
+             Fixed Left Sidebar (Leafora Branding & Navigation)
+             ==================================================================== -->
+        <aside class="leafora-sidebar" id="appSidebar">
+            <a href="#home" class="sidebar-brand">
+                <div class="brand-logo-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="brand-text-group">
+                    <span class="brand-name">Leafora</span>
+                    <span class="brand-subtitle">Plant Leaf Analysis</span>
+                </div>
             </a>
 
+            <nav class="sidebar-nav-container">
+                <ul class="sidebar-menu nav-links" id="navLinks">
+                    <li>
+                        <a href="#home" class="sidebar-link nav-link active" data-section="home">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#analysis" class="sidebar-link nav-link" data-section="analysis">
+                            <i class="fas fa-camera"></i>
+                            <span>Leaf Analysis</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#history" class="sidebar-link nav-link" data-section="history">
+                            <i class="fas fa-layer-group"></i>
+                            <span>History &amp; Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#model-performance" class="sidebar-link nav-link" data-section="model-performance">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Model Performance</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#features" class="sidebar-link nav-link" data-section="features">
+                            <i class="fas fa-th-large"></i>
+                            <span>Features</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#how-it-works" class="sidebar-link nav-link" data-section="how-it-works">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>How It Works</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="sidebar-link nav-link" data-section="about">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="nav-status">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Checking Backend...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Mobile Top Header Bar -->
+        <header class="mobile-topbar">
+            <div class="mobile-brand">
+                <i class="fas fa-leaf" style="color:var(--primary);margin-right:6px;"></i>
+                <span>Leafora</span>
+            </div>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
+        </header>
 
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#analysis" class="nav-link">Leaf Analysis</a></li>
-                <li><a href="#history" class="nav-link">History &amp; Analytics</a></li>
-                <li><a href="#features" class="nav-link">Features</a></li>
-                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li>
-                    <div class="nav-status">
-                        <span class="status-dot" id="statusDot"></span>
-                        <span id="statusText">Checking Backend...</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </header>
-
-    <!-- ====================================================================
-         Hero Section
-         ==================================================================== -->
-    <section class="hero-section" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-brain"></i>
-                    <span>CSE471 Academic Project &bull; MobileNetV2 Deep Learning</span>
-                </div>
-                <h1 class="hero-title">
-                    Leaf Quality Classification & <span>Plucking Standard</span> Monitoring
-                </h1>
-                <p class="hero-description">
-                    Empowering farmers, field labor, and plantation supervisors with instantaneous computer vision diagnostics.
-                    Classify leaf pathology across 28 agricultural categories, detect motion blur, and verify harvesting readiness in real-time.
-                </p>
-
-                <div class="hero-actions">
-                    <a href="#analysis" class="btn btn-primary">
-                        <i class="fas fa-camera"></i> Start Leaf Analysis
-                    </a>
-                    <a href="#about" class="btn btn-secondary">
-                        <i class="fas fa-info-circle"></i> Project Details
-                    </a>
-                </div>
-
-                <div class="hero-badges">
-                    <div class="info-pill">
-                        <i class="fas fa-shield-virus"></i>
-                        <span>28 Crop Classes Supported</span>
-                    </div>
-                    <div class="info-pill">
-                        <i class="fas fa-bolt"></i>
-                        <span>MobileNetV2 Sub-Second Inference</span>
-                    </div>
-                    <div class="info-pill">
-                        <i class="fas fa-balance-scale"></i>
-                        <span>Harvest Maturity Separation</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-         Historical Analysis & Database Dashboard Section
-         ==================================================================== -->
-    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">SQLite Historical Analysis</div>
-                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
-                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
-            </div>
-
-            <!-- Analytics Summary Cards -->
-            <div class="history-stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Total Analyses</span>
-                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Healthy Leaves</span>
-                        <h3 class="stat-value" id="statHealthyCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Diseased / Damaged</span>
-                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Avg. Confidence</span>
-                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
-                    </div>
-                </div>
-            </div>
-
-            <!-- History Toolbar: Search & Filters -->
-            <div class="history-card">
-                <div class="history-toolbar">
-                    <div class="toolbar-left">
-                        <div class="search-box-wrap">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
-                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterSpecies" class="form-select">
-                                <option value="">All Plant Species</option>
-                            </select>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterHealth" class="form-select">
-                                <option value="">All Health Conditions</option>
-                                <option value="Healthy">Healthy Only</option>
-                                <option value="Diseased">Diseased Only</option>
-                            </select>
+        <!-- ====================================================================
+             Main Content Area: 7 Single-View Top-Level Sections
+             ==================================================================== -->
+        <main class="main-content" id="mainContent">
+        <!-- ====================================================================
+             1. Home Section: Leafora Dashboard Overview
+             ==================================================================== -->
+        <section class="dashboard-view active" id="home">
+            <div class="home-dashboard-container">
+                <!-- Large Photographic Welcome Header Card -->
+                <div class="welcome-banner-card">
+                    <div class="welcome-topbar">
+                        <div class="welcome-actions-right">
+                            <div class="header-date-pill">
+                                <i class="far fa-calendar-alt"></i>
+                                <span id="currentDateDisplay">Tue, 17 Nov 2026</span>
+                            </div>
+                            <button type="button" class="header-icon-btn" title="System Notifications" aria-label="Notifications">
+                                <i class="far fa-bell"></i>
+                            </button>
+                            <button type="button" class="header-icon-btn" title="Leafora User Profile" aria-label="Profile">
+                                <i class="far fa-user"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <div class="toolbar-right">
-                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
-                            <i class="fas fa-trash-alt"></i> Clear Log
-                        </button>
+                    <div class="welcome-text-content">
+                        <div class="welcome-greeting" id="welcomeGreeting">Good Evening,</div>
+                        <h1 class="welcome-title">
+                            Welcome to <span class="brand-highlight">Leafora</span>
+                        </h1>
+                        <p class="welcome-subtitle">
+                            AI-powered leaf classification for crop health monitoring and quality assessment.
+                        </p>
+                        <div class="welcome-accent-line"></div>
                     </div>
                 </div>
 
-                <!-- History Table & State Containers -->
-                <div class="history-table-wrapper">
-                    <div class="loading-overlay" id="historyLoadingOverlay">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Loading inspection records...</p>
+                <!-- Four Compact Summary Cards -->
+                <div class="summary-kpi-grid">
+                    <!-- Card 1: Total Analyses -->
+                    <div class="summary-kpi-card" onclick="window.App && window.App.switchSection('history')" style="cursor:pointer;" title="View all analyses in History">
+                        <div class="summary-icon-pill green">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="summary-details">
+                            <span class="summary-title">Total Analyses</span>
+                            <div class="summary-number" id="homeTotalAnalyses">33</div>
+                        </div>
                     </div>
 
-                    <!-- Empty State -->
-                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
-                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
-                        <h4>No Analysis Records Found</h4>
-                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+                    <!-- Card 2: Healthy Leaves -->
+                    <div class="summary-kpi-card" onclick="window.App && window.App.switchSection('history')" style="cursor:pointer;" title="View healthy leaf inspections in History">
+                        <div class="summary-icon-pill green">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="summary-details">
+                            <span class="summary-title">Healthy Leaves</span>
+                            <div class="summary-number" id="homeHealthyCount">25</div>
+                        </div>
                     </div>
 
-                    <!-- Records Table -->
-                    <div id="historyTableContainer" class="table-responsive">
-                        <table class="history-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Timestamp</th>
-                                    <th>Crop &amp; Image</th>
-                                    <th>Predicted Class</th>
-                                    <th>Confidence</th>
-                                    <th>Visual Health</th>
-                                    <th>Suitability</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                                <!-- Populated dynamically by HistoryController -->
-                            </tbody>
-                        </table>
+                    <!-- Card 3: Diseased / Damaged -->
+                    <div class="summary-kpi-card" onclick="window.App && window.App.switchSection('history')" style="cursor:pointer;" title="View diseased records in History">
+                        <div class="summary-icon-pill red">
+                            <i class="fas fa-virus"></i>
+                        </div>
+                        <div class="summary-details">
+                            <span class="summary-title">Diseased / Damaged</span>
+                            <div class="summary-number" id="homeDiseasedCount">8</div>
+                        </div>
                     </div>
 
-                    <!-- Pagination Controls -->
-                    <div class="history-pagination" id="historyPagination">
-                        <button id="btnPrevPage" class="btn-page" disabled>
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </button>
-                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
-                        <button id="btnNextPage" class="btn-page" disabled>
-                            Next <i class="fas fa-chevron-right"></i>
-                        </button>
+                    <!-- Card 4: Model Test Accuracy -->
+                    <div class="summary-kpi-card" onclick="window.App && window.App.switchSection('model-performance')" style="cursor:pointer;" title="View empirical accuracy in Model Performance">
+                        <div class="summary-icon-pill green">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="summary-details">
+                            <span class="summary-title">Model Test Accuracy</span>
+                            <div class="summary-number" id="homeAccuracyVal">56.56%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supportive Cards Below KPI Cards -->
+                <div class="home-secondary-grid">
+                    <div class="home-info-card">
+                        <div class="card-header-clean">
+                            <div class="card-icon-title">
+                                <div class="header-icon-box green">
+                                    <i class="fas fa-microscope"></i>
+                                </div>
+                                <div>
+                                    <h4 style="margin:0;font-size:1.05rem;font-weight:700;color:var(--text-primary);">Core AI Capabilities</h4>
+                                    <p style="margin:2px 0 0;font-size:0.8rem;color:var(--text-muted);">MobileNetV2 deep learning on 28 PlantDoc classes</p>
+                                </div>
+                            </div>
+                            <a href="#analysis" class="btn btn-sm btn-primary">
+                                <i class="fas fa-arrow-right"></i> Launch Tool
+                            </a>
+                        </div>
+                        <div class="capabilities-list">
+                            <div class="capability-item">
+                                <div class="cap-icon"><i class="fas fa-check-circle" style="color:var(--primary);"></i></div>
+                                <div>
+                                    <strong>28 Crop Classes Identified:</strong> Apple, Corn, Grape, Tomato, Bell Pepper, Potato, Cherry, Peach, and Strawberry with specific visual pathologies.
+                                </div>
+                            </div>
+                            <div class="capability-item">
+                                <div class="cap-icon"><i class="fas fa-check-circle" style="color:var(--primary);"></i></div>
+                                <div>
+                                    <strong>Laplacian Blur Detection:</strong> Real-time variance sharpness filter prevents blurry handheld camera captures from corrupting diagnoses.
+                                </div>
+                            </div>
+                            <div class="capability-item">
+                                <div class="cap-icon"><i class="fas fa-check-circle" style="color:var(--primary);"></i></div>
+                                <div>
+                                    <strong>Harvest Maturity Guardrail:</strong> Explicitly separates leaf health from maturity, preventing premature leaf plucking.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="home-info-card">
+                        <div class="card-header-clean">
+                            <div class="card-icon-title">
+                                <div class="header-icon-box green">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <div>
+                                    <h4 style="margin:0;font-size:1.05rem;font-weight:700;color:var(--text-primary);">System &amp; Pipeline Status</h4>
+                                    <p style="margin:2px 0 0;font-size:0.8rem;color:var(--text-muted);">Active runtime parameters and audit storage</p>
+                                </div>
+                            </div>
+                            <a href="#model-performance" class="btn btn-sm btn-secondary">
+                                <i class="fas fa-chart-line"></i> Performance
+                            </a>
+                        </div>
+                        <ul class="system-status-list">
+                            <li>
+                                <span class="status-key"><i class="fas fa-brain" style="margin-right:6px;color:var(--primary);"></i> Neural Architecture:</span>
+                                <span class="status-val">MobileNetV2 (Fine-Tuned Top 34)</span>
+                            </li>
+                            <li>
+                                <span class="status-key"><i class="fas fa-database" style="margin-right:6px;color:#2563eb;"></i> Dataset:</span>
+                                <span class="status-val">PlantDoc (2,916 cleaned images)</span>
+                            </li>
+                            <li>
+                                <span class="status-key"><i class="fas fa-sync-alt" style="margin-right:6px;color:#d97706;"></i> Preprocessing:</span>
+                                <span class="status-val">cv2.INTER_LINEAR Bilinear (224&times;224)</span>
+                            </li>
+                            <li>
+                                <span class="status-key"><i class="fas fa-table" style="margin-right:6px;color:#16a34a;"></i> Local Database:</span>
+                                <span class="status-val">SQLite (leaf_analysis.db)</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Modal: Record Diagnostic Detail -->
-    <div id="historyDetailModal" class="modal-backdrop">
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <div class="modal-title-group">
-                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
-                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
-                </div>
-                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modalRecordDetails">
-                <!-- Injected dynamically -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ====================================================================
-         Main Interactive Analysis Dashboard
-         ==================================================================== -->
-    <section class="analysis-section" id="analysis">
+<section class="analysis-section dashboard-view" id="analysis">
         <div class="container">
             <div class="section-header">
                 <div class="section-subtitle">Real-Time Computer Vision</div>
@@ -343,9 +360,15 @@
                                     <i class="fas fa-sliders-h"></i> Certainty Threshold:
                                 </label>
                                 <div class="threshold-slider-wrapper">
-                                    <input type="range" id="thresholdSlider" min="0.20" max="0.80" step="0.05" value="0.40">
-                                    <span class="threshold-val" id="thresholdVal">40%</span>
+                                    <input type="range" id="thresholdSlider" min="0.20" max="0.80" step="0.05" value="0.50">
+                                    <span class="threshold-val" id="thresholdVal">50%</span>
                                 </div>
+                            </div>
+
+                            <!-- Out-of-Distribution Non-Leaf Rejection Alert -->
+                            <div class="alert-box alert-danger" id="rejectionAlertBox" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:0.875rem 1rem;border-radius:10px;margin-top:1rem;margin-bottom:1rem;font-size:0.9rem;align-items:center;gap:10px;">
+                                <i class="fas fa-ban" style="font-size:1.15rem;color:#dc2626;flex-shrink:0;"></i>
+                                <div id="rejectionAlertText" style="font-weight:600;line-height:1.4;">No valid plant leaf detected. Please upload or capture a clear photograph of a plant leaf.</div>
                             </div>
 
                             <div class="preview-actions">
@@ -455,10 +478,7 @@
         </div>
     </section>
 
-
-         Historical Analysis & Database Dashboard Section
-         ==================================================================== -->
-    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+<section class="history-section dashboard-view" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
         <div class="container">
             <div class="section-header">
                 <div class="section-subtitle">SQLite Historical Analysis</div>
@@ -583,177 +603,704 @@
         </div>
     </section>
 
-    <!-- Modal: Record Diagnostic Detail -->
-    <div id="historyDetailModal" class="modal-backdrop">
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <div class="modal-title-group">
-                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
-                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
-                </div>
-                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modalRecordDetails">
-                <!-- Injected dynamically -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
-            </div>
-        </div>
-    </div>
-
-
-
-         Historical Analysis & Database Dashboard Section
-         ==================================================================== -->
-    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+<section class="history-section dashboard-view" id="model-performance">
         <div class="container">
             <div class="section-header">
-                <div class="section-subtitle">SQLite Historical Analysis</div>
-                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
-                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+                <div class="section-subtitle">Empirical Validation &amp; Metrics</div>
+                <h2 class="section-title">AI Model Performance &amp; Evaluation</h2>
+                <p class="section-desc">Quantitative evaluation results of the MobileNetV2 architecture on 465 held-out PlantDoc test samples using bilinear interpolation preprocessing.</p>
             </div>
 
-            <!-- Analytics Summary Cards -->
-            <div class="history-stats-grid">
+            <!-- Metric Cards Grid -->
+            <div class="model-perf-kpi-grid">
                 <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
+                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-bullseye"></i></div>
                     <div class="stat-content">
-                        <span class="stat-label">Total Analyses</span>
-                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
+                        <span class="stat-label">Test Accuracy</span>
+                        <h3 class="stat-value" id="evalAccuracy">56.56%</h3>
                     </div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
+                    <div class="stat-icon-wrap" style="color:#d97706;background:rgba(217,119,6,0.1);"><i class="fas fa-calculator"></i></div>
                     <div class="stat-content">
-                        <span class="stat-label">Healthy Leaves</span>
-                        <h3 class="stat-value" id="statHealthyCount">0</h3>
+                        <span class="stat-label">Loss (CCE)</span>
+                        <h3 class="stat-value" id="evalLoss">1.5560</h3>
                     </div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
+                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-balance-scale"></i></div>
                     <div class="stat-content">
-                        <span class="stat-label">Diseased / Damaged</span>
-                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
+                        <span class="stat-label">Macro F1</span>
+                        <h3 class="stat-value" id="evalMacroF1">49.74%</h3>
                     </div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-icon-wrap" style="color:#7c3aed;background:rgba(124,58,237,0.1);"><i class="fas fa-layer-group"></i></div>
                     <div class="stat-content">
-                        <span class="stat-label">Avg. Confidence</span>
-                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
+                        <span class="stat-label">Weighted F1</span>
+                        <h3 class="stat-value" id="evalWeightedF1">53.80%</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#0891b2;background:rgba(8,145,178,0.1);"><i class="fas fa-images"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Test Samples</span>
+                        <h3 class="stat-value" id="evalTestSamples">465</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#059669;background:rgba(5,150,105,0.1);"><i class="fas fa-th-list"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Crop Classes</span>
+                        <h3 class="stat-value" id="evalClasses">28</h3>
                     </div>
                 </div>
             </div>
 
-            <!-- History Toolbar: Search & Filters -->
-            <div class="history-card">
-                <div class="history-toolbar">
-                    <div class="toolbar-left">
-                        <div class="search-box-wrap">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
-                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterSpecies" class="form-select">
-                                <option value="">All Plant Species</option>
-                            </select>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterHealth" class="form-select">
-                                <option value="">All Health Conditions</option>
-                                <option value="Healthy">Healthy Only</option>
-                                <option value="Diseased">Diseased Only</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="toolbar-right">
-                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
-                            <i class="fas fa-trash-alt"></i> Clear Log
-                        </button>
-                    </div>
+            <!-- Model Info & Dataset Breakdown Panel -->
+            <div class="model-info-grid">
+                <div class="model-info-card">
+                    <h4>
+                        <i class="fas fa-brain" style="color:var(--primary);"></i> Model Architecture &amp; Hyperparameters
+                    </h4>
+                    <ul>
+                        <li><span class="info-label">Base Backbone:</span> <span class="info-value">MobileNetV2 (ImageNet Pre-trained)</span></li>
+                        <li><span class="info-label">Input Resolution:</span> <span class="info-value">224 &times; 224 &times; 3</span></li>
+                        <li><span class="info-label">Interpolation:</span> <span class="info-value">Bilinear (<code>cv2.INTER_LINEAR</code>)</span></li>
+                        <li><span class="info-label">Rescaling Range:</span> <span class="info-value">[-1.0, 1.0] (Normalized)</span></li>
+                        <li><span class="info-label">Total Parameters:</span> <span class="info-value">2,293,852</span></li>
+                        <li><span class="info-label">Fine-Tuning:</span> <span class="info-value">Top 34 layers fine-tuned (LR: 1e-4)</span></li>
+                    </ul>
                 </div>
 
-                <!-- History Table & State Containers -->
-                <div class="history-table-wrapper">
-                    <div class="loading-overlay" id="historyLoadingOverlay">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Loading inspection records...</p>
-                    </div>
+                <div class="model-info-card">
+                    <h4>
+                        <i class="fas fa-database" style="color:#2563eb;"></i> PlantDoc Dataset Stratification
+                    </h4>
+                    <ul>
+                        <li><span class="info-label">Total Cleaned Images:</span> <span class="info-value">2,916 images across 28 classes</span></li>
+                        <li><span class="info-label">Training Set:</span> <span class="info-value">2,028 images (~70%)</span></li>
+                        <li><span class="info-label">Validation Set:</span> <span class="info-value">423 images (~14.5%)</span></li>
+                        <li><span class="info-label">Held-out Test Set:</span> <span class="info-value">465 images (~15.5%)</span></li>
+                        <li><span class="info-label">Healthy Classes:</span> <span class="info-value">10 / 28 classes</span></li>
+                        <li><span class="info-label">Diseased Classes:</span> <span class="info-value">18 / 28 classes</span></li>
+                    </ul>
+                </div>
+            </div>
 
-                    <!-- Empty State -->
-                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
-                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
-                        <h4>No Analysis Records Found</h4>
-                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+            <!-- Per-Class Classification Report Table (Full Width) -->
+            <div class="eval-card-full">
+                <div class="history-toolbar" style="border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;padding:1.15rem 1.5rem;flex-wrap:wrap;gap:1rem;">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <div style="width:36px;height:36px;border-radius:8px;background:rgba(37,99,235,0.1);display:flex;align-items:center;justify-content:center;color:#2563eb;font-size:1.1rem;">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin:0;font-size:1.1rem;font-weight:700;color:var(--text-primary);">
+                                Per-Class Evaluation Metrics (28 Classes)
+                            </h4>
+                            <p style="margin:2px 0 0;font-size:0.8rem;color:var(--text-muted);">
+                                Held-out test set performance breakdown (N=465 images)
+                            </p>
+                        </div>
                     </div>
-
-                    <!-- Records Table -->
-                    <div id="historyTableContainer" class="table-responsive">
-                        <table class="history-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Timestamp</th>
-                                    <th>Crop &amp; Image</th>
-                                    <th>Predicted Class</th>
-                                    <th>Confidence</th>
-                                    <th>Visual Health</th>
-                                    <th>Suitability</th>
-                                    <th>Actions</th>
+                    <div class="search-box-wrap" style="width:260px;">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="evalClassSearchInput" class="form-input search-input" placeholder="Search class, species, or condition..." style="font-size:0.85rem;padding:0.45rem 0.75rem 0.45rem 2.2rem;border-radius:var(--radius-md);">
+                    </div>
+                </div>
+                <div class="eval-table-container">
+                    <table class="eval-table history-table" id="evalClassTable">
+                        <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 2; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                            <tr>
+                                <th class="eval-col-name">Class Name &amp; Biological Condition</th>
+                                <th class="eval-col-health">Visual Health</th>
+                                <th class="eval-col-stat">Precision</th>
+                                <th class="eval-col-stat">Recall</th>
+                                <th class="eval-col-f1">F1-Score</th>
+                                <th class="eval-col-support" style="text-align:center;">Support</th>
+                            </tr>
+                        </thead>
+                        <tbody id="evalClassTableBody">
+                                <tr data-class-name="apple scab leaf" data-species="apple" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Apple Scab Leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Apple scab (Venturia inaequalis)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">28.6%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">53.3%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">37.2%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:37.2%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">15</td>
                                 </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                                <!-- Populated dynamically by HistoryController -->
-                            </tbody>
-                        </table>
+                                <tr data-class-name="apple leaf" data-species="apple" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Apple leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">73.3%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">78.6%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">75.9%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:75.9%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">14</td>
+                                </tr>
+                                <tr data-class-name="apple rust leaf" data-species="apple" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Apple rust leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Cedar apple rust infection</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">69.6%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">94.1%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">80.0%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:80.0%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">17</td>
+                                </tr>
+                                <tr data-class-name="bell pepper leaf" data-species="bell pepper" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Bell pepper leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">62.5%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">71.4%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">66.7%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:66.7%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">7</td>
+                                </tr>
+                                <tr data-class-name="bell pepper leaf spot" data-species="bell pepper" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Bell pepper leaf spot</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Bacterial leaf spot (Xanthomonas)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">42.9%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">23.1%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">30.0%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:30.0%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">13</td>
+                                </tr>
+                                <tr data-class-name="blueberry leaf" data-species="blueberry" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Blueberry leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">50.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">44.4%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">47.1%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:47.1%;background:#d97706;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">18</td>
+                                </tr>
+                                <tr data-class-name="cherry leaf" data-species="cherry" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Cherry leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">54.5%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">60.0%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">57.1%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:57.1%;background:#d97706;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">10</td>
+                                </tr>
+                                <tr data-class-name="corn gray leaf spot" data-species="corn (maize)" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Corn Gray leaf spot</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Cercospora zeae-maydis</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">71.4%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">45.5%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">55.6%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:55.6%;background:#d97706;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">11</td>
+                                </tr>
+                                <tr data-class-name="corn leaf blight" data-species="corn (maize)" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Corn leaf blight</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Northern corn leaf blight (Exserohilum)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">71.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">90.0%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">79.4%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:79.4%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">30</td>
+                                </tr>
+                                <tr data-class-name="corn rust leaf" data-species="corn (maize)" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Corn rust leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Common rust (Puccinia sorghi)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">59.3%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">84.2%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">69.6%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:69.6%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">19</td>
+                                </tr>
+                                <tr data-class-name="peach leaf" data-species="peach" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Peach leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">56.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">77.8%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">65.1%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:65.1%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">18</td>
+                                </tr>
+                                <tr data-class-name="potato leaf early blight" data-species="potato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Potato leaf early blight</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Early blight (Alternaria solani)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">36.4%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">14.8%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">21.1%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:21.1%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">27</td>
+                                </tr>
+                                <tr data-class-name="potato leaf late blight" data-species="potato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Potato leaf late blight</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Late blight (Phytophthora infestans)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">56.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">43.8%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">49.1%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:49.1%;background:#d97706;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">32</td>
+                                </tr>
+                                <tr data-class-name="raspberry leaf" data-species="raspberry" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Raspberry leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">78.6%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">57.9%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">66.7%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:66.7%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">19</td>
+                                </tr>
+                                <tr data-class-name="soyabean leaf" data-species="soybean" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Soyabean leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">33.3%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">36.4%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">34.8%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:34.8%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">11</td>
+                                </tr>
+                                <tr data-class-name="squash powdery mildew leaf" data-species="squash" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Squash Powdery mildew leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Powdery mildew (Podosphaera)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">62.1%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">90.0%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">73.5%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:73.5%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">20</td>
+                                </tr>
+                                <tr data-class-name="strawberry leaf" data-species="strawberry" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Strawberry leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">84.6%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">73.3%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">78.6%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:78.6%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">15</td>
+                                </tr>
+                                <tr data-class-name="tomato early blight leaf" data-species="tomato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato Early blight leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Early blight (Alternaria solani)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">0.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">0.0%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">0.0%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:0.0%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">14</td>
+                                </tr>
+                                <tr data-class-name="tomato septoria leaf spot" data-species="tomato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato Septoria leaf spot</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Septoria leaf spot (Septoria lycopersici)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">55.6%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">60.0%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">57.7%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:57.7%;background:#d97706;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">25</td>
+                                </tr>
+                                <tr data-class-name="tomato leaf" data-species="tomato" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">66.7%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">22.2%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">33.3%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:33.3%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">9</td>
+                                </tr>
+                                <tr data-class-name="tomato leaf bacterial spot" data-species="tomato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato leaf bacterial spot</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Bacterial spot (Xanthomonas)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">40.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">11.8%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">18.2%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:18.2%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">17</td>
+                                </tr>
+                                <tr data-class-name="tomato leaf late blight" data-species="tomato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato leaf late blight</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Late blight (Phytophthora infestans)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">30.4%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">38.9%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">34.2%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:34.2%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">18</td>
+                                </tr>
+                                <tr data-class-name="tomato leaf mosaic virus" data-species="tomato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato leaf mosaic virus</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Tomato mosaic virus (ToMV)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">25.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">11.1%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">15.4%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:15.4%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">9</td>
+                                </tr>
+                                <tr data-class-name="tomato leaf yellow virus" data-species="tomato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato leaf yellow virus</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Tomato yellow leaf curl virus (TYLCV)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">75.7%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">75.7%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">75.7%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:75.7%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">37</td>
+                                </tr>
+                                <tr data-class-name="tomato mold leaf" data-species="tomato" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato mold leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Leaf mold (Passalora fulva)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">31.8%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">46.7%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">37.8%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:37.8%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">15</td>
+                                </tr>
+                                <tr data-class-name="tomato two spotted spider mites leaf" data-species="tomato" data-health="pest-damaged">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">Tomato two spotted spider mites leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Two-spotted spider mites (Tetranychus urticae)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge" style="background:rgba(217,119,6,0.1);color:#d97706;border:1px solid rgba(217,119,6,0.3);padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-bug"></i> Pest-Damaged</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">0.0%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">0.0%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">0.0%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:0.0%;background:#dc2626;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">0</td>
+                                </tr>
+                                <tr data-class-name="grape leaf" data-species="grape" data-health="healthy">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">grape leaf</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Healthy foliage</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-healthy" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-heart"></i> Healthy</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">55.6%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">83.3%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">66.7%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:66.7%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">12</td>
+                                </tr>
+                                <tr data-class-name="grape leaf black rot" data-species="grape" data-health="diseased">
+                                    <td class="eval-col-name">
+                                        <span style="font-weight:700;color:var(--text-primary);font-size:0.88rem;">grape leaf black rot</span>
+                                        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:400;margin-left:6px;">&bull; Black rot (Guignardia bidwellii)</span>
+                                    </td>
+                                    <td class="eval-col-health"><span class="status-badge badge-diseased" style="padding:3px 10px;font-size:0.75rem;font-weight:600;"><i class="fas fa-virus"></i> Diseased</span></td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">58.8%</td>
+                                    <td class="eval-col-stat" style="font-size:0.88rem;font-weight:600;">76.9%</td>
+                                    <td class="eval-col-f1">
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <span style="font-size:0.85rem;font-weight:700;color:var(--text-primary);min-width:42px;">66.7%</span>
+                                            <div style="flex:1;background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;min-width:60px;">
+                                                <div style="width:66.7%;background:#16a34a;height:100%;border-radius:3px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:0.88rem;font-weight:700;text-align:center;">13</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding:0.75rem 1.5rem;background:#f8fafc;border-top:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--text-muted);flex-wrap:wrap;gap:0.5rem;">
+                    <span>Showing all 28 classes evaluated on PlantDoc test partition</span>
+                    <span>Total test support: <strong>465 samples</strong> &bull; Bilinear interpolation</span>
+                </div>
+            </div>
+
+            <!-- 28x28 Confusion Matrix Large Preview Card (Full Width) -->
+            <div class="matrix-preview-card">
+                <div class="history-toolbar" style="border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;padding:1.15rem 1.5rem;flex-wrap:wrap;gap:1rem;">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <div style="width:36px;height:36px;border-radius:8px;background:rgba(37,99,235,0.1);display:flex;align-items:center;justify-content:center;color:#2563eb;font-size:1.1rem;">
+                            <i class="fas fa-th"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin:0;font-size:1.1rem;font-weight:700;color:var(--text-primary);">
+                                28&times;28 Confusion Matrix Heatmap
+                            </h4>
+                            <p style="margin:2px 0 0;font-size:0.8rem;color:var(--text-muted);">
+                                MobileNetV2 classification predictions across all 28 classes (N=465)
+                            </p>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:0.6rem;align-items:center;">
+                        <button type="button" id="btnZoomMatrixModal" class="btn btn-outline" style="font-size:0.85rem;padding:0.45rem 0.9rem;" title="Enlarge in lightbox modal">
+                            <i class="fas fa-search-plus"></i> Inspect
+                        </button>
+                        <a href="/api/model/confusion-matrix" target="_blank" id="btnConfusionMatrixFull" class="btn btn-secondary" style="font-size:0.85rem;padding:0.45rem 1rem;" title="Open raw PNG in new tab">
+                            <i class="fas fa-external-link-alt"></i> Full Resolution
+                        </a>
+                    </div>
+                </div>
+                <div style="padding: 1.5rem; text-align: center; position: relative;">
+                    <!-- Loading spinner -->
+                    <div id="matrixLoadingSpinner" style="display:none;padding:3.5rem 1rem;flex-direction:column;align-items:center;justify-content:center;">
+                        <div class="loading-spinner"></div>
+                        <p style="margin-top:0.85rem;font-size:0.9rem;color:var(--text-muted);">Loading 28&times;28 Confusion Matrix Heatmap...</p>
                     </div>
 
-                    <!-- Pagination Controls -->
-                    <div class="history-pagination" id="historyPagination">
-                        <button id="btnPrevPage" class="btn-page" disabled>
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </button>
-                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
-                        <button id="btnNextPage" class="btn-page" disabled>
-                            Next <i class="fas fa-chevron-right"></i>
+                    <!-- Error container -->
+                    <div id="matrixErrorContainer" style="display:none;padding:3rem 1rem;text-align:center;">
+                        <i class="fas fa-exclamation-triangle" style="font-size:2.5rem;color:var(--warning);margin-bottom:0.75rem;"></i>
+                        <h5 style="margin:0 0 0.5rem;font-size:1rem;font-weight:700;color:var(--text-primary);">Matrix Image Unavailable</h5>
+                        <p id="matrixErrorText" style="font-size:0.85rem;color:var(--text-muted);margin:0 0 1rem;max-width:360px;margin-left:auto;margin-right:auto;">
+                            The confusion matrix could not be retrieved from the server.
+                        </p>
+                        <button type="button" id="btnRetryMatrixLoad" class="btn btn-sm btn-primary">
+                            <i class="fas fa-redo"></i> Retry Loading
                         </button>
                     </div>
+
+                    <!-- Matrix Image Preview with zoom trigger -->
+                    <div class="matrix-canvas-wrapper" id="matrixImageWrapper" title="Click to enlarge matrix in modal">
+                        <img src="/api/model/confusion-matrix" alt="MobileNetV2 28x28 Confusion Matrix" id="evalConfusionMatrixImg">
+                        <div style="position:absolute;bottom:12px;right:12px;background:rgba(15,23,42,0.8);color:#ffffff;font-size:0.8rem;padding:5px 10px;border-radius:6px;pointer-events:none;display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px);">
+                            <i class="fas fa-search-plus"></i> Click to Enlarge / Inspect
+                        </div>
+                    </div>
+
+                    <p style="margin:1rem 0 0;font-size:0.85rem;color:var(--text-muted);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.5;">
+                        <strong>Rows:</strong> Ground-truth test annotations &bull; <strong>Columns:</strong> Model predictions. Diagonal cells represent correct classifications. Evaluated with consistent bilinear interpolation matching model training.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal: Record Diagnostic Detail -->
-    <div id="historyDetailModal" class="modal-backdrop">
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <div class="modal-title-group">
-                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
-                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
-                </div>
-                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modalRecordDetails">
-                <!-- Injected dynamically -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ====================================================================
-         Features Section
-         ==================================================================== -->
-    <section class="section" id="features" style="background:#ffffff;border-top:1px solid var(--border-color);">
+<section class="section dashboard-view" id="features">
         <div class="container">
             <div class="section-header">
                 <div class="section-subtitle">System Capabilities</div>
@@ -789,157 +1336,7 @@
         </div>
     </section>
 
-
-         Historical Analysis & Database Dashboard Section
-         ==================================================================== -->
-    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">SQLite Historical Analysis</div>
-                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
-                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
-            </div>
-
-            <!-- Analytics Summary Cards -->
-            <div class="history-stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Total Analyses</span>
-                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Healthy Leaves</span>
-                        <h3 class="stat-value" id="statHealthyCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Diseased / Damaged</span>
-                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Avg. Confidence</span>
-                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
-                    </div>
-                </div>
-            </div>
-
-            <!-- History Toolbar: Search & Filters -->
-            <div class="history-card">
-                <div class="history-toolbar">
-                    <div class="toolbar-left">
-                        <div class="search-box-wrap">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
-                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterSpecies" class="form-select">
-                                <option value="">All Plant Species</option>
-                            </select>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterHealth" class="form-select">
-                                <option value="">All Health Conditions</option>
-                                <option value="Healthy">Healthy Only</option>
-                                <option value="Diseased">Diseased Only</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="toolbar-right">
-                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
-                            <i class="fas fa-trash-alt"></i> Clear Log
-                        </button>
-                    </div>
-                </div>
-
-                <!-- History Table & State Containers -->
-                <div class="history-table-wrapper">
-                    <div class="loading-overlay" id="historyLoadingOverlay">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Loading inspection records...</p>
-                    </div>
-
-                    <!-- Empty State -->
-                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
-                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
-                        <h4>No Analysis Records Found</h4>
-                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
-                    </div>
-
-                    <!-- Records Table -->
-                    <div id="historyTableContainer" class="table-responsive">
-                        <table class="history-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Timestamp</th>
-                                    <th>Crop &amp; Image</th>
-                                    <th>Predicted Class</th>
-                                    <th>Confidence</th>
-                                    <th>Visual Health</th>
-                                    <th>Suitability</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                                <!-- Populated dynamically by HistoryController -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination Controls -->
-                    <div class="history-pagination" id="historyPagination">
-                        <button id="btnPrevPage" class="btn-page" disabled>
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </button>
-                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
-                        <button id="btnNextPage" class="btn-page" disabled>
-                            Next <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal: Record Diagnostic Detail -->
-    <div id="historyDetailModal" class="modal-backdrop">
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <div class="modal-title-group">
-                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
-                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
-                </div>
-                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modalRecordDetails">
-                <!-- Injected dynamically -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ====================================================================
-         How It Works Section
-         ==================================================================== -->
-    <section class="section" id="how-it-works">
+<section class="section dashboard-view" id="how-it-works">
         <div class="container">
             <div class="section-header">
                 <div class="section-subtitle">Processing Pipeline</div>
@@ -975,157 +1372,7 @@
         </div>
     </section>
 
-
-         Historical Analysis & Database Dashboard Section
-         ==================================================================== -->
-    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">SQLite Historical Analysis</div>
-                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
-                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
-            </div>
-
-            <!-- Analytics Summary Cards -->
-            <div class="history-stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Total Analyses</span>
-                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Healthy Leaves</span>
-                        <h3 class="stat-value" id="statHealthyCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Diseased / Damaged</span>
-                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Avg. Confidence</span>
-                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
-                    </div>
-                </div>
-            </div>
-
-            <!-- History Toolbar: Search & Filters -->
-            <div class="history-card">
-                <div class="history-toolbar">
-                    <div class="toolbar-left">
-                        <div class="search-box-wrap">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
-                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterSpecies" class="form-select">
-                                <option value="">All Plant Species</option>
-                            </select>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterHealth" class="form-select">
-                                <option value="">All Health Conditions</option>
-                                <option value="Healthy">Healthy Only</option>
-                                <option value="Diseased">Diseased Only</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="toolbar-right">
-                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
-                            <i class="fas fa-trash-alt"></i> Clear Log
-                        </button>
-                    </div>
-                </div>
-
-                <!-- History Table & State Containers -->
-                <div class="history-table-wrapper">
-                    <div class="loading-overlay" id="historyLoadingOverlay">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Loading inspection records...</p>
-                    </div>
-
-                    <!-- Empty State -->
-                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
-                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
-                        <h4>No Analysis Records Found</h4>
-                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
-                    </div>
-
-                    <!-- Records Table -->
-                    <div id="historyTableContainer" class="table-responsive">
-                        <table class="history-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Timestamp</th>
-                                    <th>Crop &amp; Image</th>
-                                    <th>Predicted Class</th>
-                                    <th>Confidence</th>
-                                    <th>Visual Health</th>
-                                    <th>Suitability</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                                <!-- Populated dynamically by HistoryController -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination Controls -->
-                    <div class="history-pagination" id="historyPagination">
-                        <button id="btnPrevPage" class="btn-page" disabled>
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </button>
-                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
-                        <button id="btnNextPage" class="btn-page" disabled>
-                            Next <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal: Record Diagnostic Detail -->
-    <div id="historyDetailModal" class="modal-backdrop">
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <div class="modal-title-group">
-                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
-                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
-                </div>
-                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modalRecordDetails">
-                <!-- Injected dynamically -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ====================================================================
-         About Section
-         ==================================================================== -->
-    <section class="section" id="about" style="background:#ffffff;border-top:1px solid var(--border-color);">
+<section class="section dashboard-view" id="about">
         <div class="container">
             <div class="section-header">
                 <div class="section-subtitle">Academic Project</div>
@@ -1147,133 +1394,75 @@
         </div>
     </section>
 
+            <!-- Global Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;">
+                            <i class="fas fa-leaf footer-leaf-icon" style="color:#B9D6C0;font-size:1.4rem;"></i>
+                            <h3 style="margin:0;font-size:1.3rem;">Leafora</h3>
+                        </div>
+                        <p>
+                            AI-powered leaf quality classification and plucking standard monitoring system. Developed for handheld field cameras using MobileNetV2 transfer learning on 28 agricultural categories.
+                        </p>
+                    </div>
 
-         Historical Analysis & Database Dashboard Section
-         ==================================================================== -->
-    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-subtitle">SQLite Historical Analysis</div>
-                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
-                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#analysis">Leaf Analysis</a></li>
+                            <li><a href="#history">Inspection History</a></li>
+                            <li><a href="#model-performance">Model Performance</a></li>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#how-it-works">How It Works</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>System Endpoints</h4>
+                        <ul>
+                            <li><a href="/api/health" target="_blank">Health Check API</a></li>
+                            <li><a href="/api/predict" target="_blank">Prediction API</a></li>
+                            <li><a href="/api/model/evaluation" target="_blank">Evaluation API</a></li>
+                            <li><a href="#about">Project Documentation</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    &copy; 2026 Leafora (AgriLeaf AI Engine) &ndash; Plant Leaf Analysis System. All rights reserved. Academic CSE471 Project.
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Modal: High-Resolution Confusion Matrix Lightbox -->
+    <div id="confusionMatrixModal" class="modal-backdrop">
+        <div class="modal-dialog" style="max-width:92vw;width:1050px;">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fas fa-th" style="color:var(--primary);margin-right:8px;"></i>
+                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">MobileNetV2 28&times;28 Confusion Matrix (3600 &times; 3200 px)</h3>
+                </div>
+                <button id="btnCloseMatrixModal" class="modal-close" aria-label="Close matrix modal">&times;</button>
             </div>
-
-            <!-- Analytics Summary Cards -->
-            <div class="history-stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Total Analyses</span>
-                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Healthy Leaves</span>
-                        <h3 class="stat-value" id="statHealthyCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Diseased / Damaged</span>
-                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
-                    <div class="stat-content">
-                        <span class="stat-label">Avg. Confidence</span>
-                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
-                    </div>
-                </div>
+            <div class="modal-body" style="padding:1rem;text-align:center;background:#0f172a;max-height:75vh;overflow:auto;">
+                <img id="modalConfusionMatrixImg" src="" alt="Full-Resolution Confusion Matrix" style="max-width:100%;height:auto;border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
             </div>
-
-            <!-- History Toolbar: Search & Filters -->
-            <div class="history-card">
-                <div class="history-toolbar">
-                    <div class="toolbar-left">
-                        <div class="search-box-wrap">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
-                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterSpecies" class="form-select">
-                                <option value="">All Plant Species</option>
-                            </select>
-                        </div>
-
-                        <div class="filter-dropdown-wrap">
-                            <select id="historyFilterHealth" class="form-select">
-                                <option value="">All Health Conditions</option>
-                                <option value="Healthy">Healthy Only</option>
-                                <option value="Diseased">Diseased Only</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="toolbar-right">
-                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
-                            <i class="fas fa-trash-alt"></i> Clear Log
-                        </button>
-                    </div>
-                </div>
-
-                <!-- History Table & State Containers -->
-                <div class="history-table-wrapper">
-                    <div class="loading-overlay" id="historyLoadingOverlay">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Loading inspection records...</p>
-                    </div>
-
-                    <!-- Empty State -->
-                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
-                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
-                        <h4>No Analysis Records Found</h4>
-                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
-                    </div>
-
-                    <!-- Records Table -->
-                    <div id="historyTableContainer" class="table-responsive">
-                        <table class="history-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Timestamp</th>
-                                    <th>Crop &amp; Image</th>
-                                    <th>Predicted Class</th>
-                                    <th>Confidence</th>
-                                    <th>Visual Health</th>
-                                    <th>Suitability</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                                <!-- Populated dynamically by HistoryController -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination Controls -->
-                    <div class="history-pagination" id="historyPagination">
-                        <button id="btnPrevPage" class="btn-page" disabled>
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </button>
-                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
-                        <button id="btnNextPage" class="btn-page" disabled>
-                            Next <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
+            <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+                <span style="font-size:0.85rem;color:var(--text-muted);">
+                    Evaluated on 465 PlantDoc held-out test images across all 28 classes with bilinear interpolation.
+                </span>
+                <div style="display:flex;gap:0.5rem;">
+                    <a href="/api/model/confusion-matrix" target="_blank" id="modalRawPngLink" class="btn btn-primary" style="font-size:0.85rem;">
+                        <i class="fas fa-external-link-alt"></i> Open Raw PNG
+                    </a>
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('confusionMatrixModal').classList.remove('active');document.body.style.overflow=''">Close</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Modal: Record Diagnostic Detail -->
     <div id="historyDetailModal" class="modal-backdrop">
@@ -1294,44 +1483,6 @@
         </div>
     </div>
 
-    <!-- ====================================================================
-         Footer
-         ==================================================================== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>AgriLeaf AI &bull; Leaf Quality System</h3>
-                    <p>AI-assisted leaf quality classification and plucking standard monitoring using handheld camera imagery. Developed for CSE471 Academic Project.</p>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#analysis">Leaf Analysis</a></li>
-                        <li><a href="#history">Inspection History</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>System Endpoints</h4>
-                    <ul>
-                        <li><a href="/api/health" target="_blank">Health Check API</a></li>
-                        <li><a href="/api/predict" target="_blank">Prediction API</a></li>
-                        <li><a href="#about">Project Documentation</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                &copy; 2026 Leaf Quality Classification & Plucking Standard Monitoring System. All rights reserved. Academic CSE471 Project.
-            </div>
-        </div>
-    </footer>
-
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="toast-container"></div>
 
@@ -1340,6 +1491,7 @@
     <script src="js/upload.js"></script>
     <script src="js/prediction.js"></script>
     <script src="js/history.js"></script>
+    <script src="js/model_evaluation.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

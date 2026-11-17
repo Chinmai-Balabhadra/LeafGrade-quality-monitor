@@ -24,6 +24,8 @@ from typing import Dict, List, Tuple, Optional, Union, Any
 import cv2
 import numpy as np
 
+from utils.preprocessing import bgr_to_rgb, resize_image, TARGET_IMAGE_SIZE
+
 # Ensure TensorFlow/Keras environment configuration
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 os.environ.setdefault("KERAS_HOME", str(PROJECT_ROOT / ".keras"))
@@ -38,7 +40,7 @@ DEFAULT_CLASS_INDICES_PATH = PROJECT_ROOT / "model" / "class_indices.json"
 SUPPORTED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tiff", ".tif"}
 
 # Production Thresholds
-DEFAULT_CONFIDENCE_THRESHOLD = 0.40  # 40% confidence threshold (chance level is ~3.57% for 28 classes)
+DEFAULT_CONFIDENCE_THRESHOLD = 0.50  # 50% confidence threshold for certain classification
 BLUR_LAPLACIAN_THRESHOLD = 50.0      # Variance below 50 indicates high blur / out-of-focus camera
 
 
@@ -79,6 +81,12 @@ class LeafPredictor:
 
         self._load_class_indices()
         self._load_model()
+
+        # Initialize Out-of-Distribution (OOD) Leaf Validator
+        from utils.leaf_validator import RobustLeafValidator
+        self.validator = RobustLeafValidator.get_instance()
+        if self.model is not None:
+            self.validator.bind_feature_extractor(self.model)
 
     def _load_class_indices(self) -> None:
         """Loads and parses the class mapping and plucking metadata."""
@@ -262,11 +270,45 @@ class LeafPredictor:
         # 2. Image Quality & Sharpness Assessment
         quality_meta = self.assess_image_quality(img_bgr, self.blur_threshold)
 
-        # 3. Preprocess for MobileNetV2
-        # Convert BGR to RGB
-        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-        # Resize to standard 224x224
-        img_resized = cv2.resize(img_rgb, (224, 224), interpolation=cv2.INTER_AREA)
+        # 3. Out-of-Distribution (OOD) Input Validation BEFORE MobileNetV2 28-Class Classifier
+        is_valid_leaf, val_message, val_code, val_details = self.validator.validate(img_bgr)
+        if not is_valid_leaf:
+            logger.info(f"OOD input rejected ({val_code}) for source '{source_name}': {val_message}")
+            return {
+                "status": "REJECTED_NOT_LEAF",
+                "message": val_message,
+                "error": "REJECTED_NOT_LEAF",
+                "is_leaf": False,
+                "source": source_name,
+                "predicted_class": None,
+                "predicted_index": None,
+                "confidence": 0.0,
+                "confidence_percent": 0.0,
+                "confidence_threshold_applied": round(eff_threshold, 4),
+                "is_above_threshold": False,
+                "confidence_warning": val_message,
+                "blur_warning": quality_meta.get("is_blurry") and f"Laplacian variance ({quality_meta['laplacian_variance']}) indicates blur.",
+                "visual_health_category": "Invalid Input",
+                "is_visually_healthy": False,
+                "plucking_recommendation": val_message,
+                "species": "Non-Leaf / Out-of-Distribution",
+                "condition": "Rejected",
+                "plucking_suitability": "Not Applicable",
+                "top_three": [],
+                "quality_assessment": quality_meta,
+                "validation_details": {
+                    "stage": val_code,
+                    "rejection_reason": val_message,
+                    **val_details
+                },
+                "disclaimer": "The input image was rejected by Out-of-Distribution validation because no valid plant leaf was detected."
+            }
+
+        # 4. Preprocess for MobileNetV2 (consistent with Keras training pipeline)
+        # Convert BGR to RGB using shared preprocessing utility
+        img_rgb = bgr_to_rgb(img_bgr)
+        # Resize to standard 224x224 using cv2.INTER_LINEAR (bilinear interpolation matching model training)
+        img_resized = resize_image(img_rgb, target_size=TARGET_IMAGE_SIZE, interpolation=cv2.INTER_LINEAR)
         # Convert to float32 batch [1, 224, 224, 3] in [0, 255] range
         # Note: In-graph Rescaling layer inside leaf_classifier.keras performs the [-1, 1] scaling
         input_tensor = np.expand_dims(img_resized.astype(np.float32), axis=0)
@@ -329,8 +371,8 @@ class LeafPredictor:
             status = "UNCERTAIN_LOW_CONFIDENCE"
             confidence_warning = (
                 f"Model prediction confidence ({pred_confidence * 100:.2f}%) is below the required certainty threshold "
-                f"({eff_threshold * 100:.1f}%). The leaf image may have poor lighting, heavy background foliage, "
-                f"atypical lesions, or camera motion blur. Classification should be treated as an unconfirmed suggestion."
+                f"({eff_threshold * 100:.1f}%). Moderate confidence / uncertain prediction. The leaf image may have poor lighting, "
+                f"heavy background foliage, atypical lesions, or camera motion blur. Classification should be treated as an unconfirmed candidate suggestion."
             )
             plucking_recommendation = (
                 "Uncertain visual classification: Do not make harvesting decisions based on this prediction. "

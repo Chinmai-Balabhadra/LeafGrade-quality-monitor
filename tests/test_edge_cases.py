@@ -102,14 +102,15 @@ class TestEdgeCasesAndReliability(unittest.TestCase):
 
     def test_edge_07_blurry_photograph_detection(self):
         """Verify heavily blurred image triggers blur alert and rating."""
-        # Create a synthetic solid grey image (Laplacian variance = 0.0)
-        from PIL import Image
-        img = Image.new("RGB", (224, 224), color=(128, 128, 128))
+        from PIL import Image, ImageFilter
+        # Blur the genuine leaf image to test blur detection on actual foliage
+        img = Image.open(io.BytesIO(self.valid_image_bytes))
+        blurred = img.filter(ImageFilter.GaussianBlur(radius=15))
         buf = io.BytesIO()
-        img.save(buf, format="JPEG")
+        blurred.save(buf, format="JPEG")
         buf.seek(0)
 
-        data = {"file": (buf, "flat_grey_blurry.jpg")}
+        data = {"file": (buf, "apple_leaf_blurry.jpg")}
         resp = self.client.post("/api/predict", data=data, content_type="multipart/form-data")
         self.assertEqual(resp.status_code, 200)
         res = resp.get_json()
@@ -118,6 +119,21 @@ class TestEdgeCasesAndReliability(unittest.TestCase):
         quality = res.get("quality_assessment", {})
         self.assertTrue(quality.get("is_blurry"))
         self.assertIn("Blurry", quality.get("quality_rating"))
+
+    def test_edge_07b_blank_solid_image_rejected(self):
+        """Verify solid flat blank image is rejected by OOD validation with 422."""
+        from PIL import Image
+        img = Image.new("RGB", (224, 224), color=(128, 128, 128))
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG")
+        buf.seek(0)
+
+        data = {"file": (buf, "flat_grey_blank.jpg")}
+        resp = self.client.post("/api/predict", data=data, content_type="multipart/form-data")
+        self.assertEqual(resp.status_code, 422)
+        res = resp.get_json()
+        self.assertEqual(res.get("status"), "REJECTED_NOT_LEAF")
+        self.assertIn("No valid plant leaf detected", res.get("message"))
 
     def test_edge_08_low_confidence_uncertainty_threshold(self):
         """Verify forcing a high confidence threshold (0.999) flags UNCERTAIN_LOW_CONFIDENCE."""
