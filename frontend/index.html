@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaf Quality Classification & Plucking Standard Monitoring System</title>
+    
+    <!-- Meta tags for agricultural AI tech -->
+    <meta name="description" content="AI-powered leaf quality classification and plucking standard monitoring system using handheld camera imagery and MobileNetV2 deep learning.">
+    <meta name="author" content="CSE471 Academic Project Team">
+
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Application Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- ====================================================================
+         Navigation Bar
+         ==================================================================== -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="nav-brand">
+                <span class="brand-icon"><i class="fas fa-leaf"></i></span>
+                <span>AgriLeaf <span style="color:var(--primary);font-weight:600;">AI</span></span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#analysis" class="nav-link">Leaf Analysis</a></li>
+                <li><a href="#history" class="nav-link">History &amp; Analytics</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li>
+                    <div class="nav-status">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Checking Backend...</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         Hero Section
+         ==================================================================== -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-brain"></i>
+                    <span>CSE471 Academic Project &bull; MobileNetV2 Deep Learning</span>
+                </div>
+                <h1 class="hero-title">
+                    Leaf Quality Classification & <span>Plucking Standard</span> Monitoring
+                </h1>
+                <p class="hero-description">
+                    Empowering farmers, field labor, and plantation supervisors with instantaneous computer vision diagnostics.
+                    Classify leaf pathology across 28 agricultural categories, detect motion blur, and verify harvesting readiness in real-time.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#analysis" class="btn btn-primary">
+                        <i class="fas fa-camera"></i> Start Leaf Analysis
+                    </a>
+                    <a href="#about" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Project Details
+                    </a>
+                </div>
+
+                <div class="hero-badges">
+                    <div class="info-pill">
+                        <i class="fas fa-shield-virus"></i>
+                        <span>28 Crop Classes Supported</span>
+                    </div>
+                    <div class="info-pill">
+                        <i class="fas fa-bolt"></i>
+                        <span>MobileNetV2 Sub-Second Inference</span>
+                    </div>
+                    <div class="info-pill">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Harvest Maturity Separation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+         Historical Analysis & Database Dashboard Section
+         ==================================================================== -->
+    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">SQLite Historical Analysis</div>
+                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
+                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+            </div>
+
+            <!-- Analytics Summary Cards -->
+            <div class="history-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Analyses</span>
+                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Healthy Leaves</span>
+                        <h3 class="stat-value" id="statHealthyCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Diseased / Damaged</span>
+                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Avg. Confidence</span>
+                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Toolbar: Search & Filters -->
+            <div class="history-card">
+                <div class="history-toolbar">
+                    <div class="toolbar-left">
+                        <div class="search-box-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
+                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterSpecies" class="form-select">
+                                <option value="">All Plant Species</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterHealth" class="form-select">
+                                <option value="">All Health Conditions</option>
+                                <option value="Healthy">Healthy Only</option>
+                                <option value="Diseased">Diseased Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
+                            <i class="fas fa-trash-alt"></i> Clear Log
+                        </button>
+                    </div>
+                </div>
+
+                <!-- History Table & State Containers -->
+                <div class="history-table-wrapper">
+                    <div class="loading-overlay" id="historyLoadingOverlay">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Loading inspection records...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
+                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <h4>No Analysis Records Found</h4>
+                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+                    </div>
+
+                    <!-- Records Table -->
+                    <div id="historyTableContainer" class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Timestamp</th>
+                                    <th>Crop &amp; Image</th>
+                                    <th>Predicted Class</th>
+                                    <th>Confidence</th>
+                                    <th>Visual Health</th>
+                                    <th>Suitability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Populated dynamically by HistoryController -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="history-pagination" id="historyPagination">
+                        <button id="btnPrevPage" class="btn-page" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
+                        <button id="btnNextPage" class="btn-page" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Record Diagnostic Detail -->
+    <div id="historyDetailModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
+                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
+                </div>
+                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalRecordDetails">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         Main Interactive Analysis Dashboard
+         ==================================================================== -->
+    <section class="analysis-section" id="analysis">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Real-Time Computer Vision</div>
+                <h2 class="section-title">Agricultural Leaf Quality Analysis</h2>
+                <p class="section-desc">
+                    Capture a field photograph with your device camera or upload a saved leaf image to receive automated disease classification and agronomic plucking recommendations.
+                </p>
+            </div>
+
+            <div class="analysis-dashboard results-hidden" id="analysisDashboard">
+                
+                <!-- Left Panel: Input / Camera / Preview Card -->
+                <div class="card-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i class="fas fa-upload"></i>
+                            <span>Leaf Image Ingestion</span>
+                        </div>
+                    </div>
+
+                    <div class="panel-body" style="position:relative;">
+                        <!-- Loading Overlay -->
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="spinner"></div>
+                            <div class="loading-text">Processing Leaf with MobileNetV2...</div>
+                        </div>
+
+                        <!-- Tab Selection -->
+                        <div class="input-tabs">
+                            <button class="tab-btn active" id="tabUpload">
+                                <i class="fas fa-cloud-upload-alt"></i> Upload File
+                            </button>
+                            <button class="tab-btn" id="tabCamera">
+                                <i class="fas fa-video"></i> Camera Capture
+                            </button>
+                        </div>
+
+                        <!-- Upload Content Area -->
+                        <div class="tab-content active" id="contentUpload">
+                            <div class="dropzone" id="dropzone">
+                                <i class="fas fa-images dropzone-icon"></i>
+                                <div class="dropzone-text">Drag and drop your leaf photograph here</div>
+                                <div class="dropzone-subtext">or click to browse local files</div>
+                                <button type="button" class="btn btn-secondary" id="browseFilesBtn">
+                                    <i class="fas fa-folder-open"></i> Browse Files
+                                </button>
+                                <div style="margin-top:1rem;">
+                                    <span class="dropzone-pill">JPG &bull; PNG &bull; BMP &bull; WEBP (Max 16MB)</span>
+                                </div>
+                                <input type="file" id="leafFileInput" class="file-input" accept=".jpg,.jpeg,.png,.bmp,.webp">
+                            </div>
+                        </div>
+
+                        <!-- Camera Capture Content Area -->
+                        <div class="tab-content" id="contentCamera">
+                            <div class="camera-container" id="cameraContainer">
+                                <div class="camera-preview-wrapper">
+                                    <video id="cameraFeed" autoplay playsinline muted></video>
+                                    <div class="camera-reticle"></div>
+                                </div>
+                                <div class="camera-controls">
+                                    <button type="button" class="btn btn-primary" id="btnCapture">
+                                        <i class="fas fa-circle-dot"></i> Capture Leaf
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" id="btnSwitchCamera" title="Switch between front and back camera">
+                                        <i class="fas fa-arrows-rotate"></i> Flip
+                                    </button>
+                                    <button type="button" class="btn btn-danger" id="btnCloseCamera">
+                                        <i class="fas fa-times"></i> Close
+                                    </button>
+                                </div>
+                                <canvas id="cameraCanvas"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Staged Image Preview (Common for upload and camera) -->
+                        <div class="preview-container" id="previewContainer">
+                            <div class="image-preview-wrapper">
+                                <img id="previewImage" src="" alt="Staged Leaf Image">
+                            </div>
+
+                            <div class="preview-meta">
+                                <span id="previewFilename">leaf_sample.jpg</span>
+                                <span id="previewFilesize">-- KB</span>
+                            </div>
+
+                            <!-- Custom Certainty Threshold Slider -->
+                            <div class="threshold-group">
+                                <label for="thresholdSlider">
+                                    <i class="fas fa-sliders-h"></i> Certainty Threshold:
+                                </label>
+                                <div class="threshold-slider-wrapper">
+                                    <input type="range" id="thresholdSlider" min="0.20" max="0.80" step="0.05" value="0.40">
+                                    <span class="threshold-val" id="thresholdVal">40%</span>
+                                </div>
+                            </div>
+
+                            <div class="preview-actions">
+                                <button type="button" class="btn btn-primary btn-analyze" id="btnAnalyzeLeaf">
+                                    <i class="fas fa-microscope"></i> Analyze Leaf
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="btnRetakeImage">
+                                    <i class="fas fa-redo"></i> Retake
+                                </button>
+                                <button type="button" class="btn btn-danger" id="btnRemoveImage">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Results Presentation Card -->
+                <div class="card-panel results-card" id="resultsCard">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>AI Classification Diagnostics</span>
+                        </div>
+                        <span class="result-header-badge badge-success" id="resultStatusBadge">
+                            <i class="fas fa-check-circle"></i> Certain Classification
+                        </span>
+                    </div>
+
+                    <div class="panel-body">
+                        <!-- Primary Diagnosis Banner -->
+                        <div class="diagnosis-banner" id="diagnosisBanner">
+                            <div class="diagnosis-info">
+                                <h3 id="predictedSpecies">Apple Leaf</h3>
+                                <div class="diagnosis-condition" id="predictedCondition">Healthy foliage</div>
+                            </div>
+                            <div class="confidence-gauge">
+                                <div class="gauge-val" id="confidenceGaugeVal">81.1%</div>
+                                <div class="gauge-label">Top-1 Confidence</div>
+                            </div>
+                        </div>
+
+                        <!-- Motion Blur Warning Alert (Conditional) -->
+                        <div class="alert-box alert-warning" id="blurAlertBox" style="display:none;">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <div id="blurAlertText">Image sharpness warning: low Laplacian variance detected.</div>
+                        </div>
+
+                        <!-- Uncertainty Warning Alert (Conditional) -->
+                        <div class="alert-box alert-warning" id="uncertaintyAlertBox" style="display:none;">
+                            <i class="fas fa-circle-question"></i>
+                            <div id="uncertaintyAlertText">Low confidence warning: prediction falls below required threshold.</div>
+                        </div>
+
+                        <!-- Image Quality & Sharpness Row -->
+                        <div class="quality-row">
+                            <div class="quality-metric">
+                                <div class="metric-title">Camera Sharpness</div>
+                                <div class="metric-val" id="metricSharpness">Sharp</div>
+                            </div>
+                            <div class="quality-metric">
+                                <div class="metric-title">Laplacian Variance</div>
+                                <div class="metric-val" id="metricLaplacian">542.2</div>
+                            </div>
+                            <div class="quality-metric">
+                                <div class="metric-title">Mean Brightness</div>
+                                <div class="metric-val" id="metricBrightness">128/255</div>
+                            </div>
+                        </div>
+
+                        <!-- Top-3 Ranked Candidates -->
+                        <div class="top-candidates-section">
+                            <div class="section-label">
+                                <span>Top-3 Neural Candidates</span>
+                                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:normal;">Ranked by Softmax probability</span>
+                            </div>
+                            <div id="topCandidatesList">
+                                <!-- Populated dynamically by prediction.js -->
+                            </div>
+                        </div>
+
+                        <!-- Agronomic Harvesting Recommendation Box -->
+                        <div class="recommendation-box" id="recommendationBox">
+                            <div class="rec-header" id="recHeader">
+                                <i class="fas fa-hand-holding-seedling"></i> Harvest Assessment
+                            </div>
+                            <div class="rec-body" id="recBody">
+                                Analyzing plucking criteria...
+                            </div>
+                        </div>
+
+                        <!-- Scientific Disclaimer -->
+                        <div class="disclaimer-text" id="disclaimerText">
+                            DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning. Visual health alone does not guarantee plucking readiness without tactile inspection.
+                        </div>
+
+                        <!-- Reset Analysis Button -->
+                        <div style="margin-top:1.5rem;text-align:right;">
+                            <button type="button" class="btn btn-outline" id="btnResetAnalysis">
+                                <i class="fas fa-sync-alt"></i> Analyze Another Leaf
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+         Historical Analysis & Database Dashboard Section
+         ==================================================================== -->
+    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">SQLite Historical Analysis</div>
+                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
+                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+            </div>
+
+            <!-- Analytics Summary Cards -->
+            <div class="history-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Analyses</span>
+                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Healthy Leaves</span>
+                        <h3 class="stat-value" id="statHealthyCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Diseased / Damaged</span>
+                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Avg. Confidence</span>
+                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Toolbar: Search & Filters -->
+            <div class="history-card">
+                <div class="history-toolbar">
+                    <div class="toolbar-left">
+                        <div class="search-box-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
+                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterSpecies" class="form-select">
+                                <option value="">All Plant Species</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterHealth" class="form-select">
+                                <option value="">All Health Conditions</option>
+                                <option value="Healthy">Healthy Only</option>
+                                <option value="Diseased">Diseased Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
+                            <i class="fas fa-trash-alt"></i> Clear Log
+                        </button>
+                    </div>
+                </div>
+
+                <!-- History Table & State Containers -->
+                <div class="history-table-wrapper">
+                    <div class="loading-overlay" id="historyLoadingOverlay">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Loading inspection records...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
+                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <h4>No Analysis Records Found</h4>
+                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+                    </div>
+
+                    <!-- Records Table -->
+                    <div id="historyTableContainer" class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Timestamp</th>
+                                    <th>Crop &amp; Image</th>
+                                    <th>Predicted Class</th>
+                                    <th>Confidence</th>
+                                    <th>Visual Health</th>
+                                    <th>Suitability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Populated dynamically by HistoryController -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="history-pagination" id="historyPagination">
+                        <button id="btnPrevPage" class="btn-page" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
+                        <button id="btnNextPage" class="btn-page" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Record Diagnostic Detail -->
+    <div id="historyDetailModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
+                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
+                </div>
+                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalRecordDetails">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+
+         Historical Analysis & Database Dashboard Section
+         ==================================================================== -->
+    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">SQLite Historical Analysis</div>
+                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
+                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+            </div>
+
+            <!-- Analytics Summary Cards -->
+            <div class="history-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Analyses</span>
+                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Healthy Leaves</span>
+                        <h3 class="stat-value" id="statHealthyCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Diseased / Damaged</span>
+                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Avg. Confidence</span>
+                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Toolbar: Search & Filters -->
+            <div class="history-card">
+                <div class="history-toolbar">
+                    <div class="toolbar-left">
+                        <div class="search-box-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
+                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterSpecies" class="form-select">
+                                <option value="">All Plant Species</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterHealth" class="form-select">
+                                <option value="">All Health Conditions</option>
+                                <option value="Healthy">Healthy Only</option>
+                                <option value="Diseased">Diseased Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
+                            <i class="fas fa-trash-alt"></i> Clear Log
+                        </button>
+                    </div>
+                </div>
+
+                <!-- History Table & State Containers -->
+                <div class="history-table-wrapper">
+                    <div class="loading-overlay" id="historyLoadingOverlay">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Loading inspection records...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
+                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <h4>No Analysis Records Found</h4>
+                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+                    </div>
+
+                    <!-- Records Table -->
+                    <div id="historyTableContainer" class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Timestamp</th>
+                                    <th>Crop &amp; Image</th>
+                                    <th>Predicted Class</th>
+                                    <th>Confidence</th>
+                                    <th>Visual Health</th>
+                                    <th>Suitability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Populated dynamically by HistoryController -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="history-pagination" id="historyPagination">
+                        <button id="btnPrevPage" class="btn-page" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
+                        <button id="btnNextPage" class="btn-page" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Record Diagnostic Detail -->
+    <div id="historyDetailModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
+                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
+                </div>
+                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalRecordDetails">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         Features Section
+         ==================================================================== -->
+    <section class="section" id="features" style="background:#ffffff;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">System Capabilities</div>
+                <h2 class="section-title">Engineered for Agricultural Precision</h2>
+                <p class="section-desc">Designed to address the unique challenges of outdoor handheld leaf inspection under varying daylight, shadows, and angle variations.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fas fa-network-wired"></i></div>
+                    <h3>MobileNetV2 Architecture</h3>
+                    <p>Lightweight, inverted-residual convolutional neural network with depthwise separable convolutions optimized for edge inference on handheld devices.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fas fa-camera-retro"></i></div>
+                    <h3>Live Camera & Image Ingestion</h3>
+                    <p>Seamlessly integrates desktop file selection, mobile drag-and-drop, and in-browser camera streaming via HTML5 MediaDevices APIs.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fas fa-glasses"></i></div>
+                    <h3>Blur & Sharpness Guardrails</h3>
+                    <p>Calculates Laplacian variance on incoming frames to detect camera defocus and motion blur, warning farmers before inaccurate decisions are made.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fas fa-balance-scale"></i></div>
+                    <h3>Maturity Standard Separation</h3>
+                    <p>Strictly preserves the agronomic distinction between visual health and harvesting maturity. Healthy foliage is never automatically deemed ready to pluck.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+         Historical Analysis & Database Dashboard Section
+         ==================================================================== -->
+    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">SQLite Historical Analysis</div>
+                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
+                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+            </div>
+
+            <!-- Analytics Summary Cards -->
+            <div class="history-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Analyses</span>
+                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Healthy Leaves</span>
+                        <h3 class="stat-value" id="statHealthyCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Diseased / Damaged</span>
+                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Avg. Confidence</span>
+                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Toolbar: Search & Filters -->
+            <div class="history-card">
+                <div class="history-toolbar">
+                    <div class="toolbar-left">
+                        <div class="search-box-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
+                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterSpecies" class="form-select">
+                                <option value="">All Plant Species</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterHealth" class="form-select">
+                                <option value="">All Health Conditions</option>
+                                <option value="Healthy">Healthy Only</option>
+                                <option value="Diseased">Diseased Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
+                            <i class="fas fa-trash-alt"></i> Clear Log
+                        </button>
+                    </div>
+                </div>
+
+                <!-- History Table & State Containers -->
+                <div class="history-table-wrapper">
+                    <div class="loading-overlay" id="historyLoadingOverlay">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Loading inspection records...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
+                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <h4>No Analysis Records Found</h4>
+                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+                    </div>
+
+                    <!-- Records Table -->
+                    <div id="historyTableContainer" class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Timestamp</th>
+                                    <th>Crop &amp; Image</th>
+                                    <th>Predicted Class</th>
+                                    <th>Confidence</th>
+                                    <th>Visual Health</th>
+                                    <th>Suitability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Populated dynamically by HistoryController -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="history-pagination" id="historyPagination">
+                        <button id="btnPrevPage" class="btn-page" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
+                        <button id="btnNextPage" class="btn-page" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Record Diagnostic Detail -->
+    <div id="historyDetailModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
+                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
+                </div>
+                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalRecordDetails">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         How It Works Section
+         ==================================================================== -->
+    <section class="section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Processing Pipeline</div>
+                <h2 class="section-title">How the System Evaluates Leaves</h2>
+                <p class="section-desc">A structured four-stage computer vision workflow transforming raw imagery into verified agronomic guidance.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Capture / Ingestion</h3>
+                    <p>The user uploads or photographs a single leaf under outdoor ambient lighting using a smartphone or digital camera.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Quality Preprocessing</h3>
+                    <p>The image is inspected for motion blur, converted from BGR to natural RGB, and adaptively resized to the 224&times;224 neural input standard.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Deep Neural Inference</h3>
+                    <p>The fine-tuned MobileNetV2 network extracts convolutional feature maps and generates a calibrated 28-class Softmax probability distribution.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Agronomic Advisory</h3>
+                    <p>Confidence thresholding gates uncertainty, ranks the Top-3 candidates, and pairs visual health with plucking maturity recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+         Historical Analysis & Database Dashboard Section
+         ==================================================================== -->
+    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">SQLite Historical Analysis</div>
+                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
+                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+            </div>
+
+            <!-- Analytics Summary Cards -->
+            <div class="history-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Analyses</span>
+                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Healthy Leaves</span>
+                        <h3 class="stat-value" id="statHealthyCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Diseased / Damaged</span>
+                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Avg. Confidence</span>
+                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Toolbar: Search & Filters -->
+            <div class="history-card">
+                <div class="history-toolbar">
+                    <div class="toolbar-left">
+                        <div class="search-box-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
+                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterSpecies" class="form-select">
+                                <option value="">All Plant Species</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterHealth" class="form-select">
+                                <option value="">All Health Conditions</option>
+                                <option value="Healthy">Healthy Only</option>
+                                <option value="Diseased">Diseased Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
+                            <i class="fas fa-trash-alt"></i> Clear Log
+                        </button>
+                    </div>
+                </div>
+
+                <!-- History Table & State Containers -->
+                <div class="history-table-wrapper">
+                    <div class="loading-overlay" id="historyLoadingOverlay">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Loading inspection records...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
+                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <h4>No Analysis Records Found</h4>
+                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+                    </div>
+
+                    <!-- Records Table -->
+                    <div id="historyTableContainer" class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Timestamp</th>
+                                    <th>Crop &amp; Image</th>
+                                    <th>Predicted Class</th>
+                                    <th>Confidence</th>
+                                    <th>Visual Health</th>
+                                    <th>Suitability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Populated dynamically by HistoryController -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="history-pagination" id="historyPagination">
+                        <button id="btnPrevPage" class="btn-page" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
+                        <button id="btnNextPage" class="btn-page" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Record Diagnostic Detail -->
+    <div id="historyDetailModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
+                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
+                </div>
+                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalRecordDetails">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         About Section
+         ==================================================================== -->
+    <section class="section" id="about" style="background:#ffffff;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Academic Project</div>
+                <h2 class="section-title">About the CSE471 Project</h2>
+                <p class="section-desc">Developed as part of the academic curriculum in Computer Science and Engineering.</p>
+            </div>
+
+            <div style="max-width:840px;margin:0 auto;color:var(--text-secondary);font-size:1.02rem;line-height:1.75;">
+                <p style="margin-bottom:1rem;">
+                    In commercial plantations and precision agriculture (such as tea, herbs, and leafy vegetables), the timing of leaf harvest directly dictates crop grade, chemical composition, and market value. Conventional inspection relies exclusively on subjective manual labor, leading to high variance in plucking standards and missed early disease outbreaks.
+                </p>
+                <p style="margin-bottom:1rem;">
+                    This system implements an end-to-end computer vision solution trained on the benchmark <strong>PlantDoc</strong> dataset (2,916 cleaned and deduplicated images across 28 plant pathology classes). By combining transfer learning with agronomic safeguards, the system achieves reliable diagnostic accuracy while strictly preventing false harvesting approvals.
+                </p>
+                <p>
+                    <strong>Core Tech Stack:</strong> Python 3.12, TensorFlow 2.21, Keras 3.15, MobileNetV2, OpenCV 5.0, Flask 3.1, Vanilla HTML5/CSS3/JavaScript.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+         Historical Analysis & Database Dashboard Section
+         ==================================================================== -->
+    <section class="section" id="history" style="background:#f8fafc;border-top:1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">SQLite Historical Analysis</div>
+                <h2 class="section-title">Inspection Log &amp; Quality Trends</h2>
+                <p class="section-desc">Persistent record of past leaf evaluations, pathology distributions, and harvesting recommendations stored locally in SQLite.</p>
+            </div>
+
+            <!-- Analytics Summary Cards -->
+            <div class="history-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:var(--primary);background:rgba(22,163,74,0.1);"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Analyses</span>
+                        <h3 class="stat-value" id="statTotalAnalyses">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#16a34a;background:rgba(22,163,74,0.1);"><i class="fas fa-heart"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Healthy Leaves</span>
+                        <h3 class="stat-value" id="statHealthyCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#dc2626;background:rgba(220,38,38,0.1);"><i class="fas fa-virus"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Diseased / Damaged</span>
+                        <h3 class="stat-value" id="statDiseasedCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap" style="color:#2563eb;background:rgba(37,99,235,0.1);"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-content">
+                        <span class="stat-label">Avg. Confidence</span>
+                        <h3 class="stat-value" id="statAvgConfidence">0.0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Toolbar: Search & Filters -->
+            <div class="history-card">
+                <div class="history-toolbar">
+                    <div class="toolbar-left">
+                        <div class="search-box-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="historySearchInput" class="form-input search-input" placeholder="Search by crop, disease, or filename...">
+                            <button id="btnClearSearch" class="btn-clear-search" title="Clear search"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterSpecies" class="form-select">
+                                <option value="">All Plant Species</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-dropdown-wrap">
+                            <select id="historyFilterHealth" class="form-select">
+                                <option value="">All Health Conditions</option>
+                                <option value="Healthy">Healthy Only</option>
+                                <option value="Diseased">Diseased Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <button id="btnClearAllHistory" class="btn btn-outline-danger" title="Clear all history records">
+                            <i class="fas fa-trash-alt"></i> Clear Log
+                        </button>
+                    </div>
+                </div>
+
+                <!-- History Table & State Containers -->
+                <div class="history-table-wrapper">
+                    <div class="loading-overlay" id="historyLoadingOverlay">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Loading inspection records...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="historyEmptyState" class="history-empty-state" style="display:none;">
+                        <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <h4>No Analysis Records Found</h4>
+                        <p>No leaf evaluations match your current filter criteria or the database is empty. Upload a leaf image above to begin logging records.</p>
+                    </div>
+
+                    <!-- Records Table -->
+                    <div id="historyTableContainer" class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Timestamp</th>
+                                    <th>Crop &amp; Image</th>
+                                    <th>Predicted Class</th>
+                                    <th>Confidence</th>
+                                    <th>Visual Health</th>
+                                    <th>Suitability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Populated dynamically by HistoryController -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="history-pagination" id="historyPagination">
+                        <button id="btnPrevPage" class="btn-page" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="historyPageIndicator" class="page-indicator">Page 1 of 1</span>
+                        <button id="btnNextPage" class="btn-page" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal: Record Diagnostic Detail -->
+    <div id="historyDetailModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fas fa-microscope" style="color:var(--primary);margin-right:8px;"></i>
+                    <h3 style="margin:0;font-size:1.2rem;font-weight:700;">Diagnostic Record Details</h3>
+                </div>
+                <button id="btnCloseModal" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalRecordDetails">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('historyDetailModal').classList.remove('active');document.body.style.overflow=''">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         Footer
+         ==================================================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>AgriLeaf AI &bull; Leaf Quality System</h3>
+                    <p>AI-assisted leaf quality classification and plucking standard monitoring using handheld camera imagery. Developed for CSE471 Academic Project.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#analysis">Leaf Analysis</a></li>
+                        <li><a href="#history">Inspection History</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>System Endpoints</h4>
+                    <ul>
+                        <li><a href="/api/health" target="_blank">Health Check API</a></li>
+                        <li><a href="/api/predict" target="_blank">Prediction API</a></li>
+                        <li><a href="#about">Project Documentation</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                &copy; 2026 Leaf Quality Classification & Plucking Standard Monitoring System. All rights reserved. Academic CSE471 Project.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Application Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/prediction.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+Dataset Source,Class Name,Raw Train Count,Raw Test Count,Total Raw Count,Corrupted Count,Duplicate Count Excluded,Cleaned Count,Processed Train,Processed Val,Processed Test,Retention Rate (%)
+PlantDoc,Apple_Scab_Leaf,83,10,93,0,0,93,65,13,15,100.00%
+PlantDoc,Apple_leaf,79,9,88,0,0,88,61,13,14,100.00%
+PlantDoc,Apple_rust_leaf,96,10,106,0,0,106,74,15,17,100.00%
+PlantDoc,Bell_pepper_leaf,34,8,42,0,0,42,29,6,7,100.00%
+PlantDoc,Bell_pepper_leaf_spot,74,9,83,0,0,83,58,12,13,100.00%
+PlantDoc,Blueberry_leaf,106,11,117,0,1,116,81,17,18,99.15%
+PlantDoc,Cherry_leaf,47,10,57,0,0,57,39,8,10,100.00%
+PlantDoc,Corn_Gray_leaf_spot,63,4,67,0,1,66,46,9,11,98.51%
+PlantDoc,Corn_leaf_blight,182,12,194,0,2,192,134,28,30,98.97%
+PlantDoc,Corn_rust_leaf,107,10,117,0,0,117,81,17,19,100.00%
+PlantDoc,Peach_leaf,103,9,112,0,0,112,78,16,18,100.00%
+PlantDoc,Potato_leaf_early_blight,157,14,171,0,0,171,119,25,27,100.00%
+PlantDoc,Potato_leaf_late_blight,200,8,208,0,1,207,144,31,32,99.52%
+PlantDoc,Raspberry_leaf,112,7,119,0,0,119,83,17,19,100.00%
+PlantDoc,Soyabean_leaf,57,8,65,0,0,65,45,9,11,100.00%
+PlantDoc,Squash_Powdery_mildew_leaf,124,6,130,0,0,130,91,19,20,100.00%
+PlantDoc,Strawberry_leaf,88,8,96,0,0,96,67,14,15,100.00%
+PlantDoc,Tomato_Early_blight_leaf,79,9,88,0,0,88,61,13,14,100.00%
+PlantDoc,Tomato_Septoria_leaf_spot,145,12,157,0,0,157,109,23,25,100.00%
+PlantDoc,Tomato_leaf,44,8,52,0,0,52,36,7,9,100.00%
+PlantDoc,Tomato_leaf_bacterial_spot,101,9,110,0,1,109,76,16,17,99.09%
+PlantDoc,Tomato_leaf_late_blight,101,10,111,0,0,111,77,16,18,100.00%
+PlantDoc,Tomato_leaf_mosaic_virus,44,10,54,0,0,54,37,8,9,100.00%
+PlantDoc,Tomato_leaf_yellow_virus,223,15,238,0,0,238,166,35,37,100.00%
+PlantDoc,Tomato_mold_leaf,85,6,91,0,0,91,63,13,15,100.00%
+PlantDoc,Tomato_two_spotted_spider_mites_leaf,2,0,2,0,0,2,1,1,0,100.00%
+PlantDoc,grape_leaf,63,12,75,0,0,75,52,11,12,100.00%
+PlantDoc,grape_leaf_black_rot,71,8,79,0,0,79,55,11,13,100.00%
+PlantDoc (TOTAL),ALL 28 CLASSES,2670,252,2922,0,6,2916,2028,423,465,99.79%

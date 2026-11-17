@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-11-16T04:56:43Z",
+  "system_specifications": {
+    "os": "Windows 11 (10.0.26300)",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "architecture": "AMD64",
+    "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+    "physical_cores": 10,
+    "logical_cores": 16,
+    "total_ram_gb": 15.63,
+    "available_ram_gb": 5.31,
+    "python_version": "3.12.10",
+    "python_build": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+  },
+  "benchmarks": {
+    "application_startup_time_ms": 537.73,
+    "model_initialization_time_ms": 8032.77,
+    "model_memory_footprint_mb": 317.03,
+    "process_rss_start_mb": 30.61,
+    "process_rss_peak_mb": 435.68,
+    "single_image_inference_cold_ms": 1501.42,
+    "single_image_inference_warm": {
+      "runs": 15,
+      "mean_ms": 480.29,
+      "min_ms": 425.84,
+      "max_ms": 606.33,
+      "std_ms": 45.47,
+      "p95_ms": 557.02
+    },
+    "api_request_e2e": {
+      "endpoint": "POST /api/predict",
+      "runs": 15,
+      "mean_ms": 615.51,
+      "min_ms": 464.57,
+      "max_ms": 2365.2,
+      "std_ms": 468.38,
+      "p95_ms": 1103.12
+    },
+    "database_operations": {
+      "insertion": {
+        "runs": 25,
+        "mean_ms": 11.75,
+        "min_ms": 10.07,
+        "max_ms": 14.87
+      },
+      "filtered_query": {
+        "runs": 25,
+        "mean_ms": 8.71,
+        "min_ms": 6.79,
+        "max_ms": 11.26
+      },
+      "aggregation_stats": {
+        "runs": 25,
+        "mean_ms": 9.24
+      }
+    }
+  }
+}

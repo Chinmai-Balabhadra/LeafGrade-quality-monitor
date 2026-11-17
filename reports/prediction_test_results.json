@@ -1,0 +1,562 @@
+[
+    {
+        "case": "Healthy Apple Leaf",
+        "path": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Project-471\\reports\\prediction_samples\\sample1_healthy_apple.png",
+        "result": {
+            "status": "SUCCESS",
+            "source": "test_Apple leaf_1.jpg",
+            "predicted_class": "Apple_leaf",
+            "predicted_index": 1,
+            "confidence": 0.8109,
+            "confidence_percent": 81.09,
+            "confidence_threshold_applied": 0.4,
+            "is_above_threshold": true,
+            "confidence_warning": null,
+            "blur_warning": null,
+            "visual_health_category": "Good Quality (Visually Healthy)",
+            "is_visually_healthy": true,
+            "plucking_recommendation": "Visually Healthy Foliage: Leaf exhibits uniform color and zero visible fungal or bacterial lesions. However, visual health alone does NOT guarantee plucking readiness. Field inspection required to confirm physical maturity, leaf size, tenderness, and harvest standard.",
+            "species": "Apple",
+            "condition": "Healthy foliage",
+            "plucking_suitability": "Proxy Benchmark (Tree foliage, not commercial plucking crop)",
+            "top_three": [
+                {
+                    "rank": 1,
+                    "class_name": "Apple_leaf",
+                    "class_index": 1,
+                    "confidence": 0.8109,
+                    "confidence_percent": 81.09,
+                    "species": "Apple",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                },
+                {
+                    "rank": 2,
+                    "class_name": "Cherry_leaf",
+                    "class_index": 6,
+                    "confidence": 0.0991,
+                    "confidence_percent": 9.91,
+                    "species": "Cherry",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                },
+                {
+                    "rank": 3,
+                    "class_name": "Apple_Scab_Leaf",
+                    "class_index": 0,
+                    "confidence": 0.0305,
+                    "confidence_percent": 3.05,
+                    "species": "Apple",
+                    "condition": "Apple scab (Venturia inaequalis)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                }
+            ],
+            "quality_assessment": {
+                "is_blurry": false,
+                "quality_rating": "Sharp",
+                "laplacian_variance": 55.31,
+                "mean_brightness": 111.54,
+                "contrast_std": 48.64,
+                "original_height": 3054,
+                "original_width": 2988,
+                "channels": 3
+            },
+            "disclaimer": "DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning on PlantDoc dataset images. Predictions do not provide an absolute biological guarantee. Handheld plucking standard decisions must combine visual classification with tactile maturity inspection."
+        }
+    },
+    {
+        "case": "Diseased Apple Rust",
+        "path": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Project-471\\reports\\prediction_samples\\sample2_diseased_apple_rust.png",
+        "result": {
+            "status": "SUCCESS",
+            "source": "test_Apple rust leaf_10.jpg",
+            "predicted_class": "Apple_rust_leaf",
+            "predicted_index": 2,
+            "confidence": 0.6251,
+            "confidence_percent": 62.51,
+            "confidence_threshold_applied": 0.4,
+            "is_above_threshold": true,
+            "confidence_warning": null,
+            "blur_warning": "Image sharpness warning: Laplacian variance (9.35) is below threshold (50.0). Motion blur or camera defocus may degrade classification reliability.",
+            "visual_health_category": "Poor Quality (Visually Diseased/Damaged)",
+            "is_visually_healthy": false,
+            "plucking_recommendation": "Visually Damaged/Diseased (Cedar apple rust infection): Do NOT pluck for commercial processing. Isolate or prune affected leaf to prevent pathogen dissemination.",
+            "species": "Apple",
+            "condition": "Cedar apple rust infection",
+            "plucking_suitability": "Reject / Unpluckable",
+            "top_three": [
+                {
+                    "rank": 1,
+                    "class_name": "Apple_rust_leaf",
+                    "class_index": 2,
+                    "confidence": 0.6251,
+                    "confidence_percent": 62.51,
+                    "species": "Apple",
+                    "condition": "Cedar apple rust infection",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 2,
+                    "class_name": "Apple_Scab_Leaf",
+                    "class_index": 0,
+                    "confidence": 0.1471,
+                    "confidence_percent": 14.71,
+                    "species": "Apple",
+                    "condition": "Apple scab (Venturia inaequalis)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 3,
+                    "class_name": "Cherry_leaf",
+                    "class_index": 6,
+                    "confidence": 0.0757,
+                    "confidence_percent": 7.57,
+                    "species": "Cherry",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                }
+            ],
+            "quality_assessment": {
+                "is_blurry": true,
+                "quality_rating": "Very Blurry",
+                "laplacian_variance": 9.35,
+                "mean_brightness": 110.46,
+                "contrast_std": 30.51,
+                "original_height": 2576,
+                "original_width": 2448,
+                "channels": 3
+            },
+            "disclaimer": "DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning on PlantDoc dataset images. Predictions do not provide an absolute biological guarantee. Handheld plucking standard decisions must combine visual classification with tactile maturity inspection."
+        }
+    },
+    {
+        "case": "Corn Leaf Blight",
+        "path": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Project-471\\reports\\prediction_samples\\sample3_diseased_corn_blight.png",
+        "result": {
+            "status": "SUCCESS",
+            "source": "test_Corn leaf blight_1.jpg",
+            "predicted_class": "Corn_leaf_blight",
+            "predicted_index": 8,
+            "confidence": 0.7895,
+            "confidence_percent": 78.95,
+            "confidence_threshold_applied": 0.4,
+            "is_above_threshold": true,
+            "confidence_warning": null,
+            "blur_warning": null,
+            "visual_health_category": "Poor Quality (Visually Diseased/Damaged)",
+            "is_visually_healthy": false,
+            "plucking_recommendation": "Visually Damaged/Diseased (Northern corn leaf blight (Exserohilum)): Do NOT pluck for commercial processing. Isolate or prune affected leaf to prevent pathogen dissemination.",
+            "species": "Corn (Maize)",
+            "condition": "Northern corn leaf blight (Exserohilum)",
+            "plucking_suitability": "Reject / Unpluckable",
+            "top_three": [
+                {
+                    "rank": 1,
+                    "class_name": "Corn_leaf_blight",
+                    "class_index": 8,
+                    "confidence": 0.7895,
+                    "confidence_percent": 78.95,
+                    "species": "Corn (Maize)",
+                    "condition": "Northern corn leaf blight (Exserohilum)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 2,
+                    "class_name": "Corn_Gray_leaf_spot",
+                    "class_index": 7,
+                    "confidence": 0.2084,
+                    "confidence_percent": 20.84,
+                    "species": "Corn (Maize)",
+                    "condition": "Cercospora zeae-maydis",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 3,
+                    "class_name": "Corn_rust_leaf",
+                    "class_index": 9,
+                    "confidence": 0.0019,
+                    "confidence_percent": 0.19,
+                    "species": "Corn (Maize)",
+                    "condition": "Common rust (Puccinia sorghi)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                }
+            ],
+            "quality_assessment": {
+                "is_blurry": false,
+                "quality_rating": "Sharp",
+                "laplacian_variance": 1458.72,
+                "mean_brightness": 122.78,
+                "contrast_std": 50.89,
+                "original_height": 317,
+                "original_width": 188,
+                "channels": 3
+            },
+            "disclaimer": "DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning on PlantDoc dataset images. Predictions do not provide an absolute biological guarantee. Handheld plucking standard decisions must combine visual classification with tactile maturity inspection."
+        }
+    },
+    {
+        "case": "Tomato Yellow Virus",
+        "path": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Project-471\\reports\\prediction_samples\\sample4_diseased_tomato_virus.png",
+        "result": {
+            "status": "SUCCESS",
+            "source": "test_Tomato leaf yellow virus_2_4.jpg",
+            "predicted_class": "Tomato_leaf_yellow_virus",
+            "predicted_index": 23,
+            "confidence": 0.7479,
+            "confidence_percent": 74.79,
+            "confidence_threshold_applied": 0.4,
+            "is_above_threshold": true,
+            "confidence_warning": null,
+            "blur_warning": null,
+            "visual_health_category": "Poor Quality (Visually Diseased/Damaged)",
+            "is_visually_healthy": false,
+            "plucking_recommendation": "Visually Damaged/Diseased (Tomato yellow leaf curl virus (TYLCV)): Do NOT pluck for commercial processing. Isolate or prune affected leaf to prevent pathogen dissemination.",
+            "species": "Tomato",
+            "condition": "Tomato yellow leaf curl virus (TYLCV)",
+            "plucking_suitability": "Reject / Unpluckable",
+            "top_three": [
+                {
+                    "rank": 1,
+                    "class_name": "Tomato_leaf_yellow_virus",
+                    "class_index": 23,
+                    "confidence": 0.7479,
+                    "confidence_percent": 74.79,
+                    "species": "Tomato",
+                    "condition": "Tomato yellow leaf curl virus (TYLCV)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 2,
+                    "class_name": "Potato_leaf_late_blight",
+                    "class_index": 12,
+                    "confidence": 0.0819,
+                    "confidence_percent": 8.19,
+                    "species": "Potato",
+                    "condition": "Late blight (Phytophthora infestans)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 3,
+                    "class_name": "Tomato_leaf_late_blight",
+                    "class_index": 21,
+                    "confidence": 0.0443,
+                    "confidence_percent": 4.43,
+                    "species": "Tomato",
+                    "condition": "Late blight (Phytophthora infestans)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                }
+            ],
+            "quality_assessment": {
+                "is_blurry": false,
+                "quality_rating": "Sharp",
+                "laplacian_variance": 628.86,
+                "mean_brightness": 105.54,
+                "contrast_std": 47.1,
+                "original_height": 300,
+                "original_width": 300,
+                "channels": 3
+            },
+            "disclaimer": "DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning on PlantDoc dataset images. Predictions do not provide an absolute biological guarantee. Handheld plucking standard decisions must combine visual classification with tactile maturity inspection."
+        }
+    },
+    {
+        "case": "Low Confidence Ambiguity",
+        "path": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Project-471\\reports\\prediction_samples\\sample5_low_confidence_uncertain.png",
+        "result": {
+            "status": "UNCERTAIN_LOW_CONFIDENCE",
+            "source": "test_Corn leaf blight_1.jpg",
+            "predicted_class": "Corn_leaf_blight",
+            "predicted_index": 8,
+            "confidence": 0.7895,
+            "confidence_percent": 78.95,
+            "confidence_threshold_applied": 0.85,
+            "is_above_threshold": false,
+            "confidence_warning": "Model prediction confidence (78.95%) is below the required certainty threshold (85.0%). The leaf image may have poor lighting, heavy background foliage, atypical lesions, or camera motion blur. Classification should be treated as an unconfirmed suggestion.",
+            "blur_warning": null,
+            "visual_health_category": "Poor Quality (Visually Diseased/Damaged)",
+            "is_visually_healthy": false,
+            "plucking_recommendation": "Uncertain visual classification: Do not make harvesting decisions based on this prediction. Re-capture a sharp, centered photograph of the single leaf under clear daylight.",
+            "species": "Corn (Maize)",
+            "condition": "Northern corn leaf blight (Exserohilum)",
+            "plucking_suitability": "Reject / Unpluckable",
+            "top_three": [
+                {
+                    "rank": 1,
+                    "class_name": "Corn_leaf_blight",
+                    "class_index": 8,
+                    "confidence": 0.7895,
+                    "confidence_percent": 78.95,
+                    "species": "Corn (Maize)",
+                    "condition": "Northern corn leaf blight (Exserohilum)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 2,
+                    "class_name": "Corn_Gray_leaf_spot",
+                    "class_index": 7,
+                    "confidence": 0.2084,
+                    "confidence_percent": 20.84,
+                    "species": "Corn (Maize)",
+                    "condition": "Cercospora zeae-maydis",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                },
+                {
+                    "rank": 3,
+                    "class_name": "Corn_rust_leaf",
+                    "class_index": 9,
+                    "confidence": 0.0019,
+                    "confidence_percent": 0.19,
+                    "species": "Corn (Maize)",
+                    "condition": "Common rust (Puccinia sorghi)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                }
+            ],
+            "quality_assessment": {
+                "is_blurry": false,
+                "quality_rating": "Sharp",
+                "laplacian_variance": 1458.72,
+                "mean_brightness": 122.78,
+                "contrast_std": 50.89,
+                "original_height": 317,
+                "original_width": 188,
+                "channels": 3
+            },
+            "disclaimer": "DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning on PlantDoc dataset images. Predictions do not provide an absolute biological guarantee. Handheld plucking standard decisions must combine visual classification with tactile maturity inspection."
+        }
+    },
+    {
+        "case": "Blurred Handheld Image",
+        "path": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Project-471\\reports\\prediction_samples\\sample6_blurred_leaf_warning.png",
+        "result": {
+            "status": "SUCCESS",
+            "source": "synthetic_blurred_leaf.jpg",
+            "predicted_class": "Apple_leaf",
+            "predicted_index": 1,
+            "confidence": 0.8405,
+            "confidence_percent": 84.05,
+            "confidence_threshold_applied": 0.4,
+            "is_above_threshold": true,
+            "confidence_warning": null,
+            "blur_warning": "Image sharpness warning: Laplacian variance (1.31) is below threshold (50.0). Motion blur or camera defocus may degrade classification reliability.",
+            "visual_health_category": "Good Quality (Visually Healthy)",
+            "is_visually_healthy": true,
+            "plucking_recommendation": "Visually Healthy Foliage: Leaf exhibits uniform color and zero visible fungal or bacterial lesions. However, visual health alone does NOT guarantee plucking readiness. Field inspection required to confirm physical maturity, leaf size, tenderness, and harvest standard.",
+            "species": "Apple",
+            "condition": "Healthy foliage",
+            "plucking_suitability": "Proxy Benchmark (Tree foliage, not commercial plucking crop)",
+            "top_three": [
+                {
+                    "rank": 1,
+                    "class_name": "Apple_leaf",
+                    "class_index": 1,
+                    "confidence": 0.8405,
+                    "confidence_percent": 84.05,
+                    "species": "Apple",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                },
+                {
+                    "rank": 2,
+                    "class_name": "Cherry_leaf",
+                    "class_index": 6,
+                    "confidence": 0.0743,
+                    "confidence_percent": 7.43,
+                    "species": "Cherry",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                },
+                {
+                    "rank": 3,
+                    "class_name": "Soyabean_leaf",
+                    "class_index": 14,
+                    "confidence": 0.0292,
+                    "confidence_percent": 2.92,
+                    "species": "Soybean",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                }
+            ],
+            "quality_assessment": {
+                "is_blurry": true,
+                "quality_rating": "Very Blurry",
+                "laplacian_variance": 1.31,
+                "mean_brightness": 111.54,
+                "contrast_std": 47.82,
+                "original_height": 3054,
+                "original_width": 2988,
+                "channels": 3
+            },
+            "disclaimer": "DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning on PlantDoc dataset images. Predictions do not provide an absolute biological guarantee. Handheld plucking standard decisions must combine visual classification with tactile maturity inspection."
+        }
+    },
+    {
+        "case": "Unsupported Format (.txt)",
+        "result": {
+            "status": "ERROR",
+            "message": "Unsupported file extension '.txt'. Supported formats: ['.bmp', '.jpeg', '.jpg', '.png', '.tif', '.tiff', '.webp']",
+            "source": "not_an_image.txt",
+            "predicted_class": null,
+            "confidence": 0.0,
+            "top_three": [],
+            "quality_category": "Unknown / Unsupported",
+            "plucking_recommendation": "Unable to evaluate: image input could not be loaded or processed.",
+            "quality_assessment": {
+                "status": "DECODE_FAILED"
+            }
+        }
+    },
+    {
+        "case": "Zero-Byte File",
+        "result": {
+            "status": "ERROR",
+            "message": "File is empty (0 bytes).",
+            "source": "empty_corrupt.jpg",
+            "predicted_class": null,
+            "confidence": 0.0,
+            "top_three": [],
+            "quality_category": "Unknown / Unsupported",
+            "plucking_recommendation": "Unable to evaluate: image input could not be loaded or processed.",
+            "quality_assessment": {
+                "status": "DECODE_FAILED"
+            }
+        }
+    },
+    {
+        "case": "Non-Existent File",
+        "result": {
+            "status": "ERROR",
+            "message": "File does not exist: C:\\Users\\ASUS\\OneDrive\\Desktop\\Project-471\\reports\\.temp_test_inputs\\does_not_exist.png",
+            "source": "does_not_exist.png",
+            "predicted_class": null,
+            "confidence": 0.0,
+            "top_three": [],
+            "quality_category": "Unknown / Unsupported",
+            "plucking_recommendation": "Unable to evaluate: image input could not be loaded or processed.",
+            "quality_assessment": {
+                "status": "DECODE_FAILED"
+            }
+        }
+    },
+    {
+        "case": "In-Memory Byte Stream",
+        "result": {
+            "status": "SUCCESS",
+            "source": "in_memory_bytes",
+            "predicted_class": "Apple_leaf",
+            "predicted_index": 1,
+            "confidence": 0.8109,
+            "confidence_percent": 81.09,
+            "confidence_threshold_applied": 0.4,
+            "is_above_threshold": true,
+            "confidence_warning": null,
+            "blur_warning": null,
+            "visual_health_category": "Good Quality (Visually Healthy)",
+            "is_visually_healthy": true,
+            "plucking_recommendation": "Visually Healthy Foliage: Leaf exhibits uniform color and zero visible fungal or bacterial lesions. However, visual health alone does NOT guarantee plucking readiness. Field inspection required to confirm physical maturity, leaf size, tenderness, and harvest standard.",
+            "species": "Apple",
+            "condition": "Healthy foliage",
+            "plucking_suitability": "Proxy Benchmark (Tree foliage, not commercial plucking crop)",
+            "top_three": [
+                {
+                    "rank": 1,
+                    "class_name": "Apple_leaf",
+                    "class_index": 1,
+                    "confidence": 0.8109,
+                    "confidence_percent": 81.09,
+                    "species": "Apple",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                },
+                {
+                    "rank": 2,
+                    "class_name": "Cherry_leaf",
+                    "class_index": 6,
+                    "confidence": 0.0991,
+                    "confidence_percent": 9.91,
+                    "species": "Cherry",
+                    "condition": "Healthy foliage",
+                    "visual_health_type": "Healthy",
+                    "quality_category": "Good Quality (Visually Healthy)",
+                    "default_recommendation": "Inspect leaf maturity and physical dimensions before plucking (foliage is visually healthy)."
+                },
+                {
+                    "rank": 3,
+                    "class_name": "Apple_Scab_Leaf",
+                    "class_index": 0,
+                    "confidence": 0.0305,
+                    "confidence_percent": 3.05,
+                    "species": "Apple",
+                    "condition": "Apple scab (Venturia inaequalis)",
+                    "visual_health_type": "Diseased",
+                    "quality_category": "Poor Quality (Visually Diseased/Damaged)",
+                    "default_recommendation": "Do not pluck (leaf exhibits disease lesions or pathological damage). Discard or quarantine."
+                }
+            ],
+            "quality_assessment": {
+                "is_blurry": false,
+                "quality_rating": "Sharp",
+                "laplacian_variance": 55.31,
+                "mean_brightness": 111.54,
+                "contrast_std": 48.64,
+                "original_height": 3054,
+                "original_width": 2988,
+                "channels": 3
+            },
+            "disclaimer": "DISCLAIMER: Predicted class and confidence scores represent statistical patterns from MobileNetV2 transfer learning on PlantDoc dataset images. Predictions do not provide an absolute biological guarantee. Handheld plucking standard decisions must combine visual classification with tactile maturity inspection."
+        }
+    },
+    {
+        "case": "Empty Byte Stream",
+        "result": {
+            "status": "ERROR",
+            "message": "Received empty byte array (0 bytes).",
+            "source": "in_memory_bytes",
+            "predicted_class": null,
+            "confidence": 0.0,
+            "top_three": [],
+            "quality_category": "Unknown / Unsupported",
+            "plucking_recommendation": "Unable to evaluate: image input could not be loaded or processed.",
+            "quality_assessment": {
+                "status": "DECODE_FAILED"
+            }
+        }
+    }
+]
